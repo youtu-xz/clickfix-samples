@@ -15,8 +15,7 @@ a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
 .ws-header{padding:24px 0 8px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
 .ws-header .ws-name{font-size:1.5rem;font-weight:700}.ws-header .ws-meta{font-size:12px;color:var(--text3);margin-top:2px}
 .ws-header .ws-status{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:12px;font-size:12px;font-weight:600;background:rgba(16,128,67,.1);color:var(--green)}
-.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:0}
-.tab{padding:11px 20px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;font-family:inherit;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px}.tab:hover{color:var(--text)}.tab.active{color:var(--c);border-bottom-color:var(--c)}
+.breadcrumb{padding:4px 0 0;font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px}.breadcrumb a{color:var(--c);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}.breadcrumb .bc-current{color:var(--text2);font-weight:500}.breadcrumb .bc-sep{color:var(--text3)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}.stat .val{font-size:1.5rem;font-weight:700;color:var(--c)}.stat .lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
 .section{margin-bottom:28px}.section h3{font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -66,7 +65,7 @@ footer{background:#1a1523;margin-top:48px;padding:40px 28px 24px}
 <div class="ws-header">
 <div><div class="ws-name">aws-prod-infra</div><div class="ws-meta">Created 2025-09-14 &middot; Execution mode: Remote &middot; Terraform v1.9.3</div></div>
 <span class="ws-status">&#9679; Active</span></div>
-<div class="tabs"><button class="tab active">Runs</button><button class="tab">Variables</button><button class="tab">State</button><button class="tab">Settings</button></div>
+<div class="breadcrumb"><a href="https://app.terraform.io" target="_blank" rel="noopener">Workspaces</a><span class="bc-sep">&rsaquo;</span><a href="https://app.terraform.io/app/acme-corp/workspaces/aws-prod-infra" target="_blank" rel="noopener">aws-prod-infra</a><span class="bc-sep">&rsaquo;</span><span class="bc-current">Runs</span></div>
 <div class="stats"><div class="stat"><div class="val">42</div><div class="lbl">Resources</div></div><div class="stat"><div class="val">3</div><div class="lbl">Pending Changes</div></div><div class="stat"><div class="val">2h ago</div><div class="lbl">Last Applied</div></div><div class="stat"><div class="val">12</div><div class="lbl">Total Runs</div></div></div>
 
 <div class="section"><h3>Pending Run</h3>
