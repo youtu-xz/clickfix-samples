@@ -1,42 +1,68 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Helix — Editor Configuration</title><meta name="theme-color" content="#7060e0">
-<style>:root{--c:#7060e0;--cdark:#5848c8;--bg:#fefefe;--bg2:#fafaff;--bg3:#f2f0ff;--text:#1a1a1a;--text2:#555;--text3:#999;--border:#e0dcf8;--radius:6px;--code-bg:#1a1a1a}
+<title>Helix Editor — config.toml</title><meta name="theme-color" content="#7060e0">
+<style>:root{--bg:#1e1e2e;--editor-bg:#1a1a2e;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7086;--c:#cba6f7;--blue:#89b4fa;--green:#a6e3a1;--amber:#f9e2af;--red:#f38ba8;--cyan:#89dceb;--orange:#fab387;--border:#313244;--ln-bg:#1e1e2e}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
-a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
-.topbar{background:var(--code-bg);color:#fff;position:sticky;top:0;z-index:90}
-.top-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px;gap:14px}
-.top-logo{font-size:16px;font-weight:800;color:#fff;text-decoration:none}.top-links{margin-left:auto;display:flex;gap:16px}.top-links a{color:#aaa;font-size:12px;text-decoration:none}.top-links a:hover{color:#fff}
-.container{max-width:900px;margin:0 auto;padding:0 20px}
-.page-hd{padding:28px 0 8px}.page-hd h1{font-size:1.5rem;font-weight:700}.page-hd p{font-size:14px;color:var(--text2)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}.stat .n{font-size:1.2rem;font-weight:700;color:var(--c)}.stat .l{font-size:10px;color:var(--text3);text-transform:uppercase}
-.cmd-box{background:var(--code-bg);border-radius:var(--radius);overflow:hidden;margin:14px 0;display:flex;align-items:center}.cmd-box .cmd{flex:1;padding:14px 18px;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:#e0e0e0}.cmd-box .cpy{background:rgba(255,255,255,.06);color:#aaa;border:none;border-left:1px solid rgba(255,255,255,.08);padding:14px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.opt-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
-.opt-table th{text-align:left;padding:8px 14px;background:var(--bg3);font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;border-bottom:2px solid var(--border)}
-.opt-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text2)}.opt-table td:first-child{font-family:"JetBrains Mono",Consolas,monospace;color:var(--c);font-size:12px}
-.action-bar{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--cdark)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
-.modal{background:var(--bg2);border-radius:var(--radius);padding:36px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3)}.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
-.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c)}.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer}
-.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:12px}
+body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.5;font-size:13px;height:100vh;display:flex;flex-direction:column}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.editor-layout{flex:1;display:flex}
+.sidebar{width:240px;background:#161825;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.sidebar .sd-hd{padding:10px 14px;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);font-family:Inter,sans-serif}
+.sidebar .file-item{display:flex;align-items:center;gap:6px;padding:4px 14px;font-size:11px;cursor:pointer;color:var(--text2)}.sidebar .file-item:hover{background:rgba(255,255,255,.03)}.sidebar .file-item.focus{background:rgba(203,166,247,.1);color:var(--c)}.sidebar .file-item .git-diff{font-size:9px;margin-left:auto}.git-added{color:var(--green)}.git-modified{color:var(--amber)}
+.editor-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.editor-tabs{background:#161825;display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.editor-tabs .tab{padding:6px 16px;font-size:11px;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;font-family:Inter,sans-serif}.editor-tabs .tab.active{color:var(--c);border-bottom-color:var(--c);background:rgba(203,166,247,.05)}.editor-tabs .tab .dot{font-size:8px;margin-left:4px}.dot-dirty{color:var(--amber)}
+.editor-body{flex:1;display:flex;overflow:hidden}
+.gutter{width:52px;background:var(--ln-bg);padding:8px 0;text-align:right;user-select:none;flex-shrink:0;color:var(--text3);font-size:12px;line-height:1.7;overflow:hidden;border-right:1px solid var(--border)}.gutter .ln{padding-right:10px}.gutter .ln.cursor{color:var(--c);font-weight:700}
+.code-area{flex:1;padding:8px 0;overflow-x:auto;font-size:13px;line-height:1.7}.code-area .cl{padding:0 16px;white-space:pre}.code-area .cl .kw{color:var(--purple, #cba6f7)}.code-area .cl .s{color:var(--green)}.code-area .cl .cmt{color:var(--text3)}.code-area .cl .fn{color:var(--blue)}.code-area .cl .ty{color:var(--amber)}
+.statusline{background:#161825;border-top:1px solid var(--border);padding:4px 14px;display:flex;align-items:center;gap:14px;font-size:10px;color:var(--text3);flex-shrink:0;font-family:Inter,sans-serif}.statusline .mode{background:var(--c);color:#1e1e2e;padding:2px 8px;border-radius:2px;font-weight:600;font-size:10px}.statusline .sep{color:var(--border)}
+.action-line{background:#161825;border-top:2px solid var(--c);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}.action-line .msg{font-size:11px;color:var(--text2)}.action-line .msg .key{color:var(--c);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#1e1e2e}.btn-primary:hover{opacity:.85}
+.foot-row{display:flex;justify-content:center;gap:14px;padding:6px;font-size:9px;color:var(--text3);font-family:Inter,sans-serif;flex-shrink:0;border-top:1px solid var(--border)}.foot-row a{color:var(--text2)}.foot-row a:hover{color:var(--blue)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#161825;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
+.code-display{background:var(--bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px}.code-display .copy-btn{background:var(--c);color:#1e1e2e;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#1e1e2e;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
 </style></head><body>
-<div class="topbar"><div class="top-inner"><a href="https://helix-editor.com" class="top-logo" target="_blank" rel="noopener">&#9998; Helix</a><div class="top-links"><a href="https://docs.helix-editor.com" target="_blank" rel="noopener">Docs</a><a href="https://github.com/helix-editor/helix" target="_blank" rel="noopener">GitHub</a></div></div></div>
-<main class="container">
-<div class="page-hd"><h1>Helix Editor</h1><p>A post-modern modal text editor with built-in LSP support, tree-sitter syntax highlighting, and multiple selections as a core editing primitive.</p></div>
-<div class="cmd-box"><div class="cmd">hx --tutor</div><button class="cpy" onclick="navigator.clipboard.writeText('hx --tutor')">Copy</button></div>
-<div class="cmd-box"><div class="cmd">hx --health rust</div><button class="cpy" onclick="navigator.clipboard.writeText('hx --health rust')">Copy</button></div>
-<div class="stats"><div class="stat"><div class="n">v25.01</div><div class="l">Version</div></div><div class="stat"><div class="n">Rust</div><div class="l">Language</div></div><div class="stat"><div class="n">MPL-2.0</div><div class="l">License</div></div><div class="stat"><div class="n">34.3K</div><div class="l">GitHub Stars</div></div></div>
-<table class="opt-table"><thead><tr><th>Config Option</th><th>Description</th><th>Section</th></tr></thead><tbody>
-<tr><td>theme</td><td>Color theme for syntax highlighting</td><td>editor</td></tr>
-<tr><td>languages</td><td>Language server and formatter configs</td><td>languages.toml</td></tr>
-<tr><td>keys.normal</td><td>Key remapping for normal mode</td><td>config.toml</td></tr>
-<tr><td>editor.cursor-shape</td><td>Cursor appearance per mode</td><td>editor</td></tr></tbody></table>
-<div class="action-bar"><div class="msg"><h4>Language Configuration</h4><p>View language-specific configuration options including LSP servers, formatters, and tree-sitter grammars for all supported languages.</p></div><button class="btn btn-primary" id="btnDiag">Show Language Config</button></div>
-</main>
-<footer style="background:var(--code-bg);color:#fff;margin-top:48px;padding:36px 24px 20px"><div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;font-size:13px"><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Helix</h4><a href="https://helix-editor.com" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Homepage</a><a href="https://docs.helix-editor.com" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Documentation</a><a href="https://github.com/helix-editor/helix" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">GitHub</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Community</h4><a href="https://matrix.to/#/#helix-community:matrix.org" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Matrix</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Legal</h4><a href="https://github.com/helix-editor/helix/blob/master/LICENSE" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">MPL-2.0 License</a></div></div><div style="max-width:900px;margin:20px auto 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3)">Helix &copy; 2026 Helix Contributors</div></footer>
-<div id="toastContainer" class="toast-container"></div>
-<script>(function(){var A={api:'/api/helix-lang'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.parentNode)bd.parentNode.removeChild(bd)});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){sD(cfg)}).catch(function(){toast('Unable to reach Helix API.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
+<div class="editor-layout">
+<div class="sidebar"><div class="sd-hd">File Explorer</div>
+<div class="file-item">&#128193; src/</div>
+<div class="file-item" style="padding-left:28px">&#128196; main.rs <span class="git-diff git-modified">M</span></div>
+<div class="file-item" style="padding-left:28px">&#128196; lib.rs</div>
+<div class="file-item">&#128193; tests/</div>
+<div class="file-item" style="padding-left:28px">&#128196; integration.rs</div>
+<div class="file-item" style="padding-left:28px">&#128196; unit.rs <span class="git-diff git-added">A</span></div>
+<div class="file-item focus" style="padding-left:14px">&#9881; config.toml</div>
+<div class="file-item">&#128196; Cargo.toml</div>
+<div class="file-item">&#128196; .gitignore</div>
+</div>
+<div class="editor-main">
+<div class="editor-tabs"><div class="tab">main.rs <span class="dot dot-dirty">&#9679;</span></div><div class="tab active">config.toml</div></div>
+<div class="editor-body">
+<div class="gutter"><div class="ln">1</div><div class="ln">2</div><div class="ln">3</div><div class="ln">4</div><div class="ln cursor">5</div><div class="ln">6</div><div class="ln">7</div><div class="ln">8</div><div class="ln">9</div></div>
+<div class="code-area">
+<div class="cl"><span class="cmt"># Helix editor configuration</span></div>
+<div class="cl"> </div>
+<div class="cl"><span class="kw">theme</span> = <span class="s">"catppuccin_mocha"</span></div>
+<div class="cl"> </div>
+<div class="cl">[<span class="ty">editor</span>]</div>
+<div class="cl"><span class="kw">line-number</span> = <span class="s">"relative"</span></div>
+<div class="cl"><span class="kw">mouse</span> = <span class="kw">true</span></div>
+<div class="cl"><span class="kw">auto-format</span> = <span class="kw">true</span></div>
+<div class="cl"><span class="kw">completion-trigger-len</span> = <span class="fn">2</span></div>
+<div class="cl"> </div>
+</div></div>
+<div class="statusline"><span class="mode">NORMAL</span><span class="sep">|</span>config.toml<span class="sep">|</span>9 lines<span class="sep">|</span>toml<span class="sep">|</span>Ln 5, Col 22<span style="margin-left:auto">v25.01 · MPL-2.0 · 34.3K★</span></div>
+</div></div>
+<div class="action-line"><div class="msg"><span class="key">Space + h</span> Show language server health check</div><button class="btn btn-primary" id="btnDiag">Show Diagnostics</button></div>
+<div class="foot-row">
+<a href="https://helix-editor.com" target="_blank" rel="noopener">helix-editor.com</a>
+<a href="https://docs.helix-editor.com" target="_blank" rel="noopener">Docs</a>
+<a href="https://github.com/helix-editor/helix" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/helix-editor/helix/blob/master/LICENSE" target="_blank" rel="noopener">MPL-2.0</a>
+<span>Helix &copy; 2026 Contributors</span>
+</div>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/helix-lang'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

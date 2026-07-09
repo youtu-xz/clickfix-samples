@@ -1,41 +1,63 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>lazygit — Git TUI</title><meta name="theme-color" content="#4fc08d">
-<style>:root{--c:#4fc08d;--cdark:#3aa070;--bg:#fefefe;--bg2:#f8fdfa;--bg3:#ecf9f2;--text:#1a1a1a;--text2:#555;--text3:#999;--border:#c8e6d8;--radius:6px;--code-bg:#1a1a1a}
+<title>lazygit — Status</title><meta name="theme-color" content="#4fc08d">
+<style>:root{--bg:#0a0a0a;--panel-bg:#0d1117;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--c:#7ee787;--blue:#79c0ff;--amber:#d2991d;--red:#ff7b72;--border:#21262d;--sel-bg:rgba(126,231,135,.1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
-a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
-.topbar{background:var(--code-bg);color:#fff;position:sticky;top:0;z-index:90}
-.top-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px;gap:14px}
-.top-logo{font-size:16px;font-weight:800;color:#fff;text-decoration:none}.top-links{margin-left:auto;display:flex;gap:16px}.top-links a{color:#aaa;font-size:12px;text-decoration:none}.top-links a:hover{color:#fff}
-.container{max-width:900px;margin:0 auto;padding:0 20px}
-.page-hd{padding:28px 0 8px}.page-hd h1{font-size:1.5rem;font-weight:700}.page-hd p{font-size:14px;color:var(--text2)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}.stat .n{font-size:1.2rem;font-weight:700;color:var(--c)}.stat .l{font-size:10px;color:var(--text3);text-transform:uppercase}
-.cmd-box{background:var(--code-bg);border-radius:var(--radius);overflow:hidden;margin:14px 0;display:flex;align-items:center}.cmd-box .cmd{flex:1;padding:14px 18px;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:#e0e0e0}.cmd-box .cpy{background:rgba(255,255,255,.06);color:#aaa;border:none;border-left:1px solid rgba(255,255,255,.08);padding:14px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.bind-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
-.bind-table th{text-align:left;padding:8px 14px;background:var(--bg3);font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;border-bottom:2px solid var(--border)}
-.bind-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text2)}.bind-table td:first-child{font-family:"JetBrains Mono",Consolas,monospace;color:var(--c);font-size:12px}
-.action-bar{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--cdark)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
-.modal{background:var(--bg2);border-radius:var(--radius);padding:36px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3)}.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
-.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c)}.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer}
-.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:12px}
+body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.5;font-size:12px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.lg-header{background:#161b22;border-bottom:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:90}
+.lg-header .logo{color:var(--c);font-weight:800;font-size:14px;text-decoration:none}
+.lg-header .branch{color:var(--amber);font-size:11px}.lg-header .right{margin-left:auto;display:flex;gap:10px}.lg-header .right a{color:var(--text2);font-size:10px;text-decoration:none;font-family:Inter,sans-serif}
+.layout{display:flex;height:calc(100vh - 86px)}
+.main-panel{flex:1;display:flex;flex-direction:column;min-width:0}
+.status-bar{border-bottom:1px solid var(--border);padding:6px 14px;display:flex;align-items:center;gap:16px;font-size:9px;color:var(--text3);font-family:Inter,sans-serif}
+.status-bar .tab{color:var(--text2);padding:2px 8px;border-bottom:2px solid transparent;font-size:10px}.status-bar .tab.active{color:var(--c);border-bottom-color:var(--c)}
+.commits{flex:1;overflow-y:auto}
+.commits .commit{display:flex;align-items:center;gap:8px;padding:4px 14px;border-bottom:1px solid var(--border);font-size:11px;cursor:pointer}.commits .commit:nth-child(2){background:var(--sel-bg)}.commits .commit:nth-child(2)::before{content:">";color:var(--c);font-weight:700;width:12px}
+.commits .commit .hash{color:var(--amber);width:72px;flex-shrink:0}.commits .commit .msg{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.commits .commit .ref{font-size:9px;margin-left:4px;padding:1px 4px;border-radius:2px}.ref-branch{background:rgba(126,231,135,.15);color:var(--c)}.ref-tag{background:rgba(121,192,255,.15);color:var(--blue)}.commits .commit .time{color:var(--text3);font-size:10px;margin-left:auto;white-space:nowrap}
+.diff-panel{height:200px;background:var(--panel-bg);border-top:1px solid var(--border);overflow-y:auto;padding:8px 0;flex-shrink:0}
+.diff-panel .dline{padding:1px 14px;font-size:11px;white-space:pre}.diff-panel .dline .add{color:var(--c)}.diff-panel .dline .del{color:var(--red)}.diff-panel .dline .hdr{color:var(--blue)}.diff-panel .dline .ctx{color:var(--text3)}
+.info-panel{background:var(--panel-bg);border-top:1px solid var(--c);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.info-panel .msg{font-size:10px;color:var(--text2)}.info-panel .msg .key{color:var(--c)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:3px;font-size:10px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#0a0a0a}.btn-primary:hover{opacity:.85}
+footer{text-align:center;padding:8px;font-size:9px;color:var(--text3);font-family:Inter,sans-serif;border-top:1px solid var(--border)}footer a{color:var(--text2)}footer a:hover{color:var(--blue)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#161b22;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
+.code-display{background:var(--bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px}.code-display .copy-btn{background:var(--c);color:#0a0a0a;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#0a0a0a;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
 </style></head><body>
-<div class="topbar"><div class="top-inner"><a href="https://github.com/jesseduffield/lazygit" class="top-logo" target="_blank" rel="noopener">&#128050; lazygit</a><div class="top-links"><a href="https://github.com/jesseduffield/lazygit" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/jesseduffield/lazygit#readme" target="_blank" rel="noopener">Docs</a></div></div></div>
-<main class="container">
-<div class="page-hd"><h1>lazygit — Git Terminal UI</h1><p>A simple terminal UI for git commands. Stage files, commit, branch, merge, rebase, and resolve conflicts with keyboard shortcuts — no memorizing commands.</p></div>
-<div class="cmd-box"><div class="cmd">go install github.com/jesseduffield/lazygit@latest</div><button class="cpy" onclick="navigator.clipboard.writeText('go install github.com/jesseduffield/lazygit@latest')">Copy</button></div>
-<div class="stats"><div class="stat"><div class="n">v0.45.2</div><div class="l">Version</div></div><div class="stat"><div class="n">Go</div><div class="l">Language</div></div><div class="stat"><div class="n">MIT</div><div class="l">License</div></div><div class="stat"><div class="n">54.2K</div><div class="l">GitHub Stars</div></div></div>
-<table class="bind-table"><thead><tr><th>Key</th><th>Action</th><th>Panel</th></tr></thead><tbody>
-<tr><td>Space</td><td>Stage/unstage file</td><td>Files</td></tr>
-<tr><td>c</td><td>Commit staged changes</td><td>Files</td></tr>
-<tr><td>P</td><td>Push to remote</td><td>Branches</td></tr>
-<tr><td>/</td><td>Filter/search current view</td><td>Global</td></tr></tbody></table>
-<div class="action-bar"><div class="msg"><h4>Git Configuration</h4><p>View the lazygit configuration reference including custom key bindings, git integration settings, and UI customization options.</p></div><button class="btn btn-primary" id="btnDiag">Show Git Config</button></div>
-</main>
-<footer style="background:var(--code-bg);color:#fff;margin-top:48px;padding:36px 24px 20px"><div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;font-size:13px"><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">lazygit</h4><a href="https://github.com/jesseduffield/lazygit" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">GitHub</a><a href="https://github.com/jesseduffield/lazygit#readme" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Documentation</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Author</h4><a href="https://github.com/jesseduffield" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">jesseduffield</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Legal</h4><a href="https://github.com/jesseduffield/lazygit/blob/master/LICENSE" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">MIT License</a></div></div><div style="max-width:900px;margin:20px auto 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3)">lazygit &copy; 2026 Jesse Duffield</div></footer>
-<div id="toastContainer" class="toast-container"></div>
-<script>(function(){var A={api:'/api/lazygit-conf'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.parentNode)bd.parentNode.removeChild(bd)});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){sD(cfg)}).catch(function(){toast('Unable to reach lazygit API.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
+<div class="lg-header"><a href="https://github.com/jesseduffield/lazygit" class="logo" target="_blank" rel="noopener">lazygit</a><span class="branch">main</span><span style="color:var(--text2);font-size:10px">myorg/webapp</span><div class="right"><a href="https://github.com/jesseduffield/lazygit" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/jesseduffield/lazygit#readme" target="_blank" rel="noopener">Docs</a></div></div>
+<div class="layout">
+<div class="main-panel">
+<div class="status-bar"><span class="tab active">Commits</span><span class="tab">Staging</span><span class="tab">Stash</span><span style="margin-left:auto">v0.45.2 · MIT · 54.2K★</span></div>
+<div class="commits">
+<div class="commit"><span class="hash">a3f8c2d</span><span class="msg">Fix: resolve race condition in worker pool</span><span class="ref ref-branch">main</span><span class="ref ref-tag">v2.1.0</span><span class="time">2h ago</span></div>
+<div class="commit"><span class="hash">b2e9a1f</span><span class="msg">Add: connection retry with exponential backoff</span><span class="time">5h ago</span></div>
+<div class="commit"><span class="hash">f5c7d0e</span><span class="msg">Refactor: extract database layer to separate module</span><span class="time">1d ago</span></div>
+<div class="commit"><span class="hash">d1b4a8c</span><span class="msg">Chore: update dependencies and fix lint warnings</span><span class="time">1d ago</span></div>
+</div>
+<div class="diff-panel">
+<div class="dline"><span class="hdr">diff --git a/src/worker.rs b/src/worker.rs</span></div>
+<div class="dline"><span class="hdr">--- a/src/worker.rs</span></div>
+<div class="dline"><span class="hdr">+++ b/src/worker.rs</span></div>
+<div class="dline"><span class="ctx">@@ -45,7 +45,8 @@ impl WorkerPool {</span></div>
+<div class="dline">     <span class="fn">fn</span> spawn_worker(&amp;<span class="fn">mut</span> self) {</div>
+<div class="dline"><span class="del">-</span>        <span class="fn">let</span> handle = thread::spawn(|| run_worker());</div>
+<div class="dline"><span class="add">+</span>        <span class="fn">let</span> handle = thread::Builder::new()</div>
+<div class="dline"><span class="add">+</span>            .name(<span class="s">"worker"</span>.into()).spawn(|| run_worker())?;</div>
+</div></div>
+<div class="info-panel"><div class="msg"><span class="key">Shift+P</span> Push to remote</div><button class="btn btn-primary" id="btnDiag">Show Git Config</button></div>
+</div></div>
+<footer>
+<div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:4px">
+<a href="https://github.com/jesseduffield/lazygit" target="_blank" rel="noopener">GitHub</a>
+<a href="https://github.com/jesseduffield/lazygit#readme" target="_blank" rel="noopener">Documentation</a>
+<a href="https://github.com/jesseduffield" target="_blank" rel="noopener">jesseduffield</a>
+<a href="https://github.com/jesseduffield/lazygit/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>
+</div>
+<span>lazygit &copy; 2026 Jesse Duffield</span>
+</footer>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/lazygit-conf'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

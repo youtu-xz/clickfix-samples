@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vitest run — test report</title><meta name="theme-color" content="#729b1b">
+<style>:root{--bg:#fafafa;--text:#1a1a1a;--text2:#555;--text3:#999;--c:#729b1b;--green:#2d8a4e;--red:#d93025;--amber:#c77400;--blue:#1a73e8;--border:#e0e0e0;--card-bg:#fff;--code-bg:#1a1a1a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:#fff;border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:90}
+.header .logo{color:var(--c);font-weight:800;font-size:15px;text-decoration:none}.header .right{margin-left:auto;display:flex;gap:14px}.header .right a{color:var(--text2);font-size:12px;text-decoration:none}
+.container{max-width:900px;margin:0 auto;padding:20px 24px}
+.summary-bar{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:18px;display:flex;gap:24px;align-items:center}
+.summary-bar .big-n{font-size:32px;font-weight:800}.big-pass{color:var(--green)}.big-fail{color:var(--red)}.big-time{color:var(--text2);font-size:20px}
+.summary-bar .sep{width:1px;height:40px;background:var(--border)}.summary-bar .detail{font-size:12px;color:var(--text2);line-height:1.6}.summary-bar .detail b{color:var(--text)}
+.test-list{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.test-item{display:flex;align-items:center;gap:10px;padding:7px 16px;border-bottom:1px solid var(--border);font-size:12px;font-family:"JetBrains Mono",Consolas,monospace}.test-item:last-child{border-bottom:none}
+.test-item .icon{width:18px;font-size:14px;text-align:center;flex-shrink:0}.icon-pass{color:var(--green)}.icon-fail{color:var(--red)}.test-item .file{color:var(--blue);width:160px;flex-shrink:0}.test-item .test-name{color:var(--text);flex:1}.test-item .time{color:var(--text3);width:60px;text-align:right;font-size:10px;flex-shrink:0}
+.coverage-bar{margin:16px 0}.cov-item{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:12px}.cov-item .label{width:120px;color:var(--text2);flex-shrink:0}.cov-item .bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}.cov-item .bar-fill{height:100%;border-radius:4px}.cov-statements{background:var(--green);width:94%}.cov-branches{background:var(--c);width:88%}.cov-functions{background:var(--amber);width:91%}
+.action-bar{background:var(--card-bg);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:6px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{opacity:.9}.btn-outline{background:none;border:1px solid var(--border);color:var(--text2)}
+footer{background:#fff;border-top:1px solid var(--border);padding:24px;text-align:center;margin-top:36px;font-family:Inter,sans-serif}
+footer .flinks{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:6px;font-size:12px}footer .flinks a{color:var(--text2);text-decoration:none}footer .flinks a:hover{color:var(--c)}footer .copyr{font-size:10px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease;box-shadow:0 8px 32px rgba(0,0,0,.15)}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
+.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px;font-family:"JetBrains Mono",Consolas,monospace}.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:4px;font-size:12px;font-family:Inter,sans-serif;z-index:10000}
+</style></head><body>
+<div class="header"><a href="https://vitest.dev" class="logo" target="_blank" rel="noopener">&#9889; Vitest</a><div class="right"><a href="https://vitest.dev/docs" target="_blank" rel="noopener">Docs</a><a href="https://github.com/vitest-dev/vitest" target="_blank" rel="noopener">GitHub</a></div></div>
+<div class="container">
+<div class="summary-bar">
+<span class="big-n big-pass">42</span> <span style="color:var(--green);font-weight:600">passed</span>
+<span class="sep"></span>
+<span class="big-n big-fail">0</span> <span style="color:var(--red)">failed</span>
+<span class="sep"></span>
+<span class="big-time">6.7s</span>
+<div class="detail"><b>42</b> tests in <b>8</b> suites<br>v3.0.5 · MIT · 13.8K★</div>
+<span style="margin-left:auto"><button class="btn btn-outline" onclick="navigator.clipboard.writeText('npx vitest run --coverage')">Copy cmd</button></span>
+</div>
+
+<div class="test-list">
+<div class="test-item"><span class="icon icon-pass">&#10003;</span><span class="file">auth.test.ts</span><span class="test-name">login returns JWT token on valid credentials</span><span class="time">12ms</span></div>
+<div class="test-item"><span class="icon icon-pass">&#10003;</span><span class="file">auth.test.ts</span><span class="test-name">login rejects with 401 on invalid password</span><span class="time">8ms</span></div>
+<div class="test-item"><span class="icon icon-pass">&#10003;</span><span class="file">auth.test.ts</span><span class="test-name">logout clears session cookie</span><span class="time">5ms</span></div>
+<div class="test-item"><span class="icon icon-pass">&#10003;</span><span class="file">api/users.test.ts</span><span class="test-name">GET /users returns paginated list</span><span class="time">45ms</span></div>
+<div class="test-item"><span class="icon icon-pass">&#10003;</span><span class="file">api/users.test.ts</span><span class="test-name">POST /users creates new user with valid body</span><span class="time">28ms</span></div>
+</div>
+
+<div class="coverage-bar"><div style="font-size:13px;font-weight:600;margin-bottom:8px">Code Coverage</div>
+<div class="cov-item"><span class="label">Statements</span><div class="bar-track"><div class="bar-fill cov-statements"></div></div><span style="font-size:11px;color:var(--green);width:40px;text-align:right">94%</span></div>
+<div class="cov-item"><span class="label">Branches</span><div class="bar-track"><div class="bar-fill cov-branches"></div></div><span style="font-size:11px;color:var(--c);width:40px;text-align:right">88%</span></div>
+<div class="cov-item"><span class="label">Functions</span><div class="bar-track"><div class="bar-fill cov-functions"></div></div><span style="font-size:11px;color:var(--amber);width:40px;text-align:right">91%</span></div></div>
+
+<div class="action-bar"><div class="msg"><h4 style="font-size:13px">Test Configuration</h4><p style="font-size:11px;color:var(--text2)">View vitest.config.ts settings including coverage thresholds, test environment, and global setup.</p></div><button class="btn btn-primary" id="btnDiag">Show Config</button></div>
+</div>
+<footer><div class="flinks">
+<a href="https://vitest.dev" target="_blank" rel="noopener">vitest.dev</a>
+<a href="https://vitest.dev/docs" target="_blank" rel="noopener">Documentation</a>
+<a href="https://github.com/vitest-dev/vitest" target="_blank" rel="noopener">GitHub</a>
+<a href="https://discord.gg/n6T4Yhkb" target="_blank" rel="noopener">Discord</a>
+<a href="https://github.com/vitest-dev/vitest/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+</div><div class="copyr">Vitest &copy; 2026 Vitest Contributors</div></footer>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/vitest-cfg'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

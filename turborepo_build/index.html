@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>turbo build — log</title><meta name="theme-color" content="#ff4b4b">
+<style>:root{--bg:#0a0a0a;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--c:#ff7b72;--green:#7ee787;--amber:#d2991d;--blue:#79c0ff;--purple:#cba6f7;--border:#21262d;--cache:#3fb950;--miss:#d2991d}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.6;font-size:12px}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:#161b22;border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:90}
+.header .logo{color:var(--c);font-weight:800;font-size:14px;text-decoration:none}.header .right{margin-left:auto;display:flex;gap:14px}.header .right a{color:var(--text2);font-size:10px;text-decoration:none;font-family:Inter,sans-serif}
+.container{max-width:900px;margin:0 auto;padding:16px 20px}
+.build-hd{border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-bottom:14px;font-size:11px}
+.build-hd .title{color:var(--green);font-weight:700;font-size:16px}.build-hd .meta{color:var(--text3);margin-top:4px}
+.task-list{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:14px}
+.task-item{display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid var(--border);font-size:11px}.task-item:last-child{border-bottom:none}
+.task-item .status{width:18px;text-align:center;flex-shrink:0;font-size:14px}.status-ok{color:var(--green)}.status-cached{color:var(--cache)}.status-miss{color:var(--miss)}
+.task-item .task-name{color:var(--purple);width:140px;flex-shrink:0}.task-item .output{color:var(--text2);flex:1}.task-item .time{color:var(--text3);width:80px;text-align:right;flex-shrink:0;font-size:10px}
+.task-item .cache-label{font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600}.cache-hit{background:rgba(63,185,80,.15);color:var(--cache)}.cache-miss{background:rgba(210,153,29,.15);color:var(--miss)}
+.stats-footer{border:1px solid var(--border);border-radius:6px;padding:10px 16px;display:flex;gap:16px;align-items:center;font-size:10px;color:var(--text3);margin-bottom:14px}.stats-footer .n{color:var(--c);font-weight:700;font-size:14px}
+.action-bar{background:#161b22;border:2px solid var(--c);border-radius:6px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.action-bar .msg{font-size:11px;color:var(--text2)}.action-bar .msg .cmd{color:var(--c)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#0a0a0a}.btn-primary:hover{opacity:.85}
+footer{text-align:center;padding:14px;font-size:9px;color:var(--text3);font-family:Inter,sans-serif;border-top:1px solid var(--border);margin-top:20px}footer a{color:var(--text2)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#161b22;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
+.code-display{background:var(--bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px}.code-display .copy-btn{background:var(--c);color:#0a0a0a;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#0a0a0a;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
+</style></head><body>
+<div class="header"><a href="https://turbo.build" class="logo" target="_blank" rel="noopener">&#128293; turborepo</a><div class="right"><a href="https://turbo.build/repo/docs" target="_blank" rel="noopener">Docs</a><a href="https://github.com/vercel/turborepo" target="_blank" rel="noopener">GitHub</a></div></div>
+<div class="container">
+<div class="build-hd"><div class="title">&#10003; Full build succeeded</div><div class="meta">turbo run build lint test --filter=@myorg/web --cache-dir=.turbo &middot; v2.3.0 &middot; total 14.2s</div></div>
+
+<div class="task-list">
+<div class="task-item"><span class="status status-ok">&#10003;</span><span class="task-name">@myorg/web#build</span><span class="output">dist/ output 847KB (gzip: 212KB)</span><span class="cache-label cache-miss">miss</span><span class="time">4.2s</span></div>
+<div class="task-item"><span class="status status-cached">&#9711;</span><span class="task-name">@myorg/ui#build</span><span class="output">dist/ output 312KB (gzip: 89KB)</span><span class="cache-label cache-hit">cache</span><span class="time">0.1s</span></div>
+<div class="task-item"><span class="status status-ok">&#10003;</span><span class="task-name">@myorg/web#lint</span><span class="output">biome lint: 0 errors, 2 warnings</span><span class="cache-label cache-miss">miss</span><span class="time">3.1s</span></div>
+<div class="task-item"><span class="status status-cached">&#9711;</span><span class="task-name">@myorg/ui#lint</span><span class="output">biome lint: 0 errors, 0 warnings</span><span class="cache-label cache-hit">cache</span><span class="time">0.1s</span></div>
+<div class="task-item"><span class="status status-ok">&#10003;</span><span class="task-name">@myorg/web#test</span><span class="output">vitest: 42 passed, 0 failed</span><span class="cache-label cache-miss">miss</span><span class="time">6.7s</span></div>
+</div>
+
+<div class="stats-footer"><span>Tasks: <span class="n">5</span></span><span>Cached: <span class="n">2</span></span><span>Total: <span class="n">14.2s</span></span><span style="margin-left:auto">v2.3.0 · MPL-2.0 · 27.2K★</span></div>
+<div class="action-bar"><div class="msg"><span class="cmd">turbo run build --help</span> <span style="color:var(--text3)">| head -40</span></div><button class="btn btn-primary" id="btnDiag">Show Pipeline Config</button></div>
+</div>
+<footer>
+<div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:6px">
+<a href="https://turbo.build" target="_blank" rel="noopener">turbo.build</a>
+<a href="https://turbo.build/repo/docs" target="_blank" rel="noopener">Documentation</a>
+<a href="https://github.com/vercel/turborepo" target="_blank" rel="noopener">GitHub</a>
+<a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a>
+<a href="https://github.com/vercel/turborepo/blob/main/LICENSE" target="_blank" rel="noopener">MPL-2.0</a>
+</div>
+<span>Turborepo &copy; 2026 Vercel Inc.</span>
+</footer>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/turbo-pipeline'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

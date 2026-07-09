@@ -1,48 +1,74 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>powerlevel10k — Oh My Zsh Themes</title><meta name="theme-color" content="#4a90d9">
-<style>:root{--c:#4a90d9;--cdark:#357abd;--bg:#fafafa;--bg2:#fff;--bg3:#f0f4f8;--text:#1a1a1a;--text2:#555;--text3:#999;--border:#dde4ed;--radius:6px;--code-bg:#1e1e2e}
+<title>powerlevel10k — Oh My Zsh</title><meta name="theme-color" content="#1e1e2e">
+<style>:root{--bg:#0d1117;--term-bg:#0a0a0f;--text:#cdd6f4;--text2:#a6adc8;--text3:#6c7086;--c:#89b4fa;--green:#a6e3a1;--amber:#f9e2af;--red:#f38ba8;--purple:#cba6f7;--border:#1e1e2e;--radius:6px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.7;font-size:13px}
 a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
-.topbar{background:var(--code-bg);color:#fff;position:sticky;top:0;z-index:90}
-.top-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:52px;gap:14px}
-.top-logo{font-size:16px;font-weight:800;color:#fff;text-decoration:none;display:flex;align-items:center;gap:6px}
-.top-links{margin-left:auto;display:flex;gap:16px}.top-links a{color:#aaa;font-size:12px;text-decoration:none}.top-links a:hover{color:#fff}
-.container{max-width:960px;margin:0 auto;padding:0 20px}
-.page-hd{padding:28px 0 8px}.page-hd h1{font-size:1.5rem;font-weight:700}.page-hd p{font-size:14px;color:var(--text2);margin-top:4px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}.stat .n{font-size:1.2rem;font-weight:700;color:var(--c)}.stat .l{font-size:10px;color:var(--text3);text-transform:uppercase}
-.install-cmd{background:var(--code-bg);border-radius:var(--radius);overflow:hidden;margin:16px 0;display:flex;align-items:center}
-.install-cmd .cmd{flex:1;padding:14px 18px;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:#cdd6f4}.install-cmd .cpy{background:rgba(255,255,255,.06);color:#aaa;border:none;border-left:1px solid rgba(255,255,255,.08);padding:14px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.theme-preview{background:var(--code-bg);border-radius:var(--radius);padding:20px;margin:16px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:#a6e3a1;line-height:1.8}
-.opt-table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
-.opt-table th{text-align:left;padding:8px 14px;background:var(--bg3);font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;border-bottom:2px solid var(--border)}
-.opt-table td{padding:9px 14px;border-bottom:1px solid var(--border);color:var(--text2)}.opt-table tr:hover td{background:var(--bg2)}
-.action-bar{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--cdark)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
-.modal{background:var(--bg2);border-radius:var(--radius);padding:36px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:inherit}
-.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
-.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c)}.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:12px}
+.term-container{max-width:880px;margin:40px auto;padding:0 20px}
+.term-window{border:1px solid #313244;border-radius:10px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.5);margin-bottom:32px}
+.term-titlebar{background:#11111b;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #313244}
+.term-titlebar .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}.dot-r{background:#f38ba8}.dot-y{background:#f9e2af}.dot-g{background:#a6e3a1}
+.term-titlebar .ttl{flex:1;text-align:center;font-size:11px;color:#585b70;font-family:Inter,sans-serif}
+.term-body{background:var(--term-bg);padding:20px 22px;min-height:420px}
+.term-body .line{margin-bottom:4px;white-space:pre-wrap}
+.term-body .prompt{color:var(--green)}.term-body .cmd{color:var(--text)}.term-body .out{color:var(--text2)}
+.term-body .hl{color:var(--amber)}.term-body .dim{color:#585b70}.term-body .coral{color:var(--red)}.term-body .cyan{color:#89dceb}
+.p10k-demo{background:#0d1117;border:1px solid #313244;border-radius:6px;padding:14px 18px;margin:12px 0;font-size:12px;line-height:2}
+.p10k-demo .dir{color:var(--cyan)}.p10k-demo .git{color:var(--amber)}.p10k-demo .lang{color:var(--c)}
+.term-body .info-row{display:flex;gap:16px;margin:12px 0;flex-wrap:wrap}
+.term-body .info-box{background:#11111b;border:1px solid #313244;border-radius:6px;padding:10px 14px;font-size:11px;color:var(--text2);min-width:120px}.info-box .n{color:var(--c);font-size:15px;font-weight:700}
+.action-term{background:#1e1e2e;border:2px solid var(--c);border-radius:6px;padding:14px 18px;margin:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.action-term .msg{font-size:12px;color:var(--amber)}.action-term .msg .blink{animation:blink 1s infinite}@keyframes blink{50%{opacity:0}}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none;transition:all .15s}
+.btn-primary{background:var(--c);color:#11111b}.btn-primary:hover{opacity:.85}
+footer{text-align:center;padding:24px;font-size:11px;color:#585b70;font-family:Inter,sans-serif}
+footer a{color:var(--text2)}footer a:hover{color:var(--c)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#11111b;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
+.code-display{background:#0a0a0f;border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--green);font-size:12px}.code-display .copy-btn{background:var(--c);color:#111;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#111;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
+@media(max-width:768px){.term-body .info-row{flex-direction:column}}
 </style></head><body>
-<div class="topbar"><div class="top-inner">
-<a href="https://ohmyz.sh" class="top-logo" target="_blank" rel="noopener">&#9889; Oh My Zsh</a>
-<div class="top-links"><a href="https://ohmyz.sh" target="_blank" rel="noopener">Home</a><a href="https://github.com/ohmyzsh/ohmyzsh/wiki" target="_blank" rel="noopener">Wiki</a><a href="https://github.com/ohmyzsh/ohmyzsh" target="_blank" rel="noopener">GitHub</a></div>
+<div class="term-container">
+<div class="term-window">
+<div class="term-titlebar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><span class="ttl">oh-my-zsh — ~/powerlevel10k — zsh 5.9</span></div>
+<div class="term-body">
+<div class="line"><span class="dim"># Oh My Zsh installation complete! (3.2s)</span></div>
+<div class="line"><span class="dim"># Active theme:</span> <span class="hl">powerlevel10k</span></div>
+<div class="line"><span class="dim"># Config file:</span> <span class="cyan">~/.zshrc</span> <span class="dim">→</span> <span class="cyan">~/.p10k.zsh</span></div>
+<div class="line"><span class="dim"># Plugins loaded: 12 (git, docker, kubectl, fzf, zsh-autosuggestions...)</span></div>
+<div class="line" style="margin-top:14px"><span class="prompt">$ </span><span class="cmd">omz theme list --installed</span></div>
+<div class="line"><span class="out">powerlevel10k</span> <span class="dim">v1.20.0</span> <span class="out">[active]</span></div>
+<div class="line"><span class="out">agnoster</span> <span class="dim">[not active]</span></div>
+<div class="line"><span class="out">robbyrussell</span> <span class="dim">[not active]</span></div>
+<div class="p10k-demo" style="margin-top:14px">
+<span class="dir">~/projects/ohmyzsh</span> <span class="git">on  main [!]</span> <span class="lang">via zsh v5.9</span><br>
+<span class="dim">❯</span> <span class="cmd">cat ~/.p10k.zsh | head -6</span><br>
+<span class="dim"># Generated by Powerlevel10k</span><br>
+<span class="hl">POWERLEVEL9K_MODE</span>=<span class="cyan">'nerdfont-complete'</span><br>
+<span class="hl">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</span>=(<span class="coral">dir vcs status</span>)<br>
+<span class="hl">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS</span>=(<span class="purple">time battery</span>)<br>
+<span class="hl">POWERLEVEL9K_INSTANT_PROMPT</span>=<span class="cyan">verbose</span>
+</div>
+<div class="line" style="margin-top:14px"><span class="prompt">$ </span><span class="cmd">omz plugin list --enabled | wc -l</span></div>
+<div class="line"><span class="out">12</span></div>
+<div class="info-row"><div class="info-box"><span class="n">12</span><br>plugins enabled</div><div class="info-box"><span class="n">3</span><br>themes installed</div><div class="info-box"><span class="n">v1.20.0</span><br>p10k version</div><div class="info-box"><span class="n">48.2K</span><br>GitHub stars</div></div>
+<div class="action-term"><div class="msg"><span class="blink">&#9610;</span> Show p10k configuration wizard?</div><button class="btn btn-primary" id="btnDiag">Show Config</button></div>
 </div></div>
-<main class="container">
-<div class="page-hd"><h1>powerlevel10k</h1><p>A fast and feature-rich Zsh theme with instant prompt, Git status, and extensive customization options. Over 50 configurable segments.</p></div>
-<div class="install-cmd"><div class="cmd">git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k</div><button class="cpy" onclick="navigator.clipboard.writeText('git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k')">Copy</button></div>
-<div class="stats"><div class="stat"><div class="n">48.2K</div><div class="l">Stars</div></div><div class="stat"><div class="n">2.5K</div><div class="l">Forks</div></div><div class="stat"><div class="n">MIT</div><div class="l">License</div></div><div class="stat"><div class="n">~/.zshrc</div><div class="l">Config File</div></div></div>
-<div class="theme-preview">~ <span style="color:#f9e2af">&#10003;</span> <span style="color:#89dceb">src/</span> <span style="color:#a6e3a1">main.rs</span>  <span style="color:#f9e2af">&#10003;</span> <span style="color:#89dceb">tests/</span>  <span style="color:#f38ba8">&#10007;</span> <span style="color:#89dceb">docs/</span><br><span style="color:#cdd6f4">~/projects/myapp</span> <span style="color:#a6e3a1">on main [!]</span> <span style="color:#94e2d5">via &#9812; v1.85.0</span><br>$ </div>
-<table class="opt-table"><thead><tr><th>Configuration Option</th><th>Description</th><th>Default</th></tr></thead><tbody>
-<tr><td>POWERLEVEL9K_LEFT_PROMPT_ELEMENTS</td><td>Segments on the left side of prompt</td><td>dir vcs status</td></tr>
-<tr><td>POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS</td><td>Segments on the right side</td><td>time battery</td></tr>
-<tr><td>POWERLEVEL9K_INSTANT_PROMPT</td><td>Show prompt instantly before plugins load</td><td>verbose</td></tr></tbody></table>
-<div class="action-bar"><div class="msg"><h4>Theme Configuration</h4><p>View the complete powerlevel10k configuration including all available prompt segments, color schemes, and instant prompt settings.</p></div><button class="btn btn-primary" id="btnDiag">Show Theme Config</button></div>
-</main>
-<footer style="background:var(--code-bg);color:#fff;margin-top:48px;padding:36px 24px 20px"><div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;font-size:13px"><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Oh My Zsh</h4><a href="https://ohmyz.sh" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Homepage</a><a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Themes</a><a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Plugins</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Community</h4><a href="https://github.com/ohmyzsh/ohmyzsh" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">GitHub</a><a href="https://github.com/ohmyzsh/ohmyzsh/discussions" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">Discussions</a></div><div><h4 style="font-size:11px;font-weight:600;margin-bottom:12px;color:rgba(255,255,255,.7);text-transform:uppercase">Legal</h4><a href="https://github.com/ohmyzsh/ohmyzsh/blob/master/LICENSE.txt" target="_blank" rel="noopener" style="display:block;color:rgba(255,255,255,.45);text-decoration:none;margin-bottom:7px;font-size:12px">MIT License</a></div></div><div style="max-width:960px;margin:20px auto 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3)">Oh My Zsh &copy; 2026</div></footer>
-<div id="toastContainer" class="toast-container"></div>
-<script>(function(){var A={api:'/api/omz-config'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.parentNode)bd.parentNode.removeChild(bd)});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){sD(cfg)}).catch(function(){toast('Unable to reach Oh My Zsh API.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
+<footer>
+<div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:10px">
+<a href="https://ohmyz.sh" target="_blank" rel="noopener">Oh My Zsh</a>
+<a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes" target="_blank" rel="noopener">Themes</a>
+<a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins" target="_blank" rel="noopener">Plugins</a>
+<a href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="noopener">p10k GitHub</a>
+<a href="https://github.com/ohmyzsh/ohmyzsh" target="_blank" rel="noopener">OMZ GitHub</a>
+<a href="https://github.com/ohmyzsh/ohmyzsh/blob/master/LICENSE.txt" target="_blank" rel="noopener">MIT License</a>
+</div>
+<span>Oh My Zsh &copy; 2026 Robby Russell &amp; Contributors</span>
+</footer>
+</div>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/omz-config'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost. Retry?')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

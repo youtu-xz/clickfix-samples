@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configuring Gatsby for Production — Gatsby Blog</title><meta name="theme-color" content="#663399">
+<style>:root{--bg:#fff;--text:#1a1a1a;--text2:#555;--text3:#999;--c:#663399;--link:#663399;--code-bg:#f5f2fa;--border:#e8e0f0;--quote-bg:#faf8ff;--tag-bg:#f0e8f8}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,Charter,"Times New Roman",serif;background:var(--bg);color:var(--text);line-height:1.8;font-size:17px}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.topbar{background:var(--c);color:#fff;padding:10px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:90;font-family:Inter,-apple-system,sans-serif}
+.topbar .logo{font-size:15px;font-weight:800;color:#fff;text-decoration:none}.topbar .right{margin-left:auto;display:flex;gap:16px}.topbar .right a{color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;font-family:Inter,sans-serif}.topbar .right a:hover{color:#fff}
+.article{max-width:680px;margin:0 auto;padding:32px 24px}
+.article h1{font-size:2rem;font-weight:800;line-height:1.3;margin-bottom:8px;font-family:Inter,-apple-system,sans-serif}
+.article .meta{color:var(--text3);font-size:14px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);font-family:Inter,sans-serif}
+.article .meta span{margin-right:16px}.article .meta .tag{background:var(--tag-bg);color:var(--c);padding:2px 10px;border-radius:10px;font-size:12px;font-family:Inter,sans-serif}
+.prose p{margin-bottom:20px}.prose h2{font-size:1.3rem;font-weight:700;margin:36px 0 14px;font-family:Inter,sans-serif}.prose h3{font-size:1.1rem;font-weight:700;margin:28px 0 10px;font-family:Inter,sans-serif}
+.prose code{background:var(--code-bg);padding:2px 6px;border-radius:3px;font-size:14px;font-family:"JetBrains Mono",Consolas,monospace}.prose pre{background:#1a1a1a;color:#e0e0e0;padding:18px 22px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;line-height:1.6;position:relative}.prose pre .lang{position:absolute;top:6px;right:14px;font-size:10px;color:var(--text3);font-family:Inter,sans-serif;text-transform:uppercase}
+.prose pre .cpy-btn{position:absolute;top:6px;right:60px;font-size:10px;background:rgba(255,255,255,.08);color:#aaa;border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:2px 8px;cursor:pointer;font-family:Inter,sans-serif}.prose pre .cpy-btn:hover{color:#fff}
+.prose blockquote{background:var(--quote-bg);border-left:4px solid var(--c);padding:14px 20px;margin:20px 0;font-style:italic;color:var(--text2)}
+.prose ul,.prose ol{margin:16px 0;padding-left:24px}.prose li{margin-bottom:6px}
+.stats-row{display:flex;gap:10px;margin:24px 0;flex-wrap:wrap;font-family:Inter,sans-serif;font-size:13px}.stats-row .stat{background:var(--code-bg);padding:8px 14px;border-radius:6px;text-align:center}.stats-row .stat .n{font-weight:700;color:var(--c);font-size:18px}.stats-row .stat .l{font-size:10px;color:var(--text3);text-transform:uppercase}
+.action-card{background:var(--quote-bg);border:2px solid var(--c);border-radius:8px;padding:20px 24px;margin:28px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:Inter,sans-serif}
+.action-card h4{font-size:15px;margin-bottom:2px}.action-card p{font-size:13px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{opacity:.9}
+footer{background:#f8f7fa;border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-family:Inter,sans-serif;margin-top:48px}
+footer .flinks{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:8px;font-size:13px}footer .flinks a{color:var(--text2);text-decoration:none}footer .flinks a:hover{color:var(--c)}footer .copyr{font-size:11px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease;box-shadow:0 8px 32px rgba(0,0,0,.15)}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:17px;font-weight:600;margin-bottom:8px;font-family:Inter,sans-serif}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
+.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px;font-family:"JetBrains Mono",Consolas,monospace}.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:10px 18px;border-radius:4px;font-size:12px;font-family:Inter,sans-serif;z-index:10000}
+</style></head><body>
+<div class="topbar"><a href="https://www.gatsbyjs.com" class="logo" target="_blank" rel="noopener">Gatsby</a><div class="right"><a href="https://www.gatsbyjs.com/docs" target="_blank" rel="noopener">Docs</a><a href="https://www.gatsbyjs.com/blog" target="_blank" rel="noopener">Blog</a><a href="https://github.com/gatsbyjs/gatsby" target="_blank" rel="noopener">GitHub</a></div></div>
+<article class="article">
+<h1>Configuring Gatsby for Production: Build Optimization Guide</h1>
+<div class="meta"><span>July 9, 2026</span><span>8 min read</span><span class="tag">performance</span><span class="tag">configuration</span></div>
+<div class="prose">
+<p>When deploying a Gatsby site to production, the <code>gatsby-config.js</code> and <code>gatsby-node.js</code> files contain critical settings that directly impact build performance, bundle size, and runtime behavior.</p>
+
+<div class="stats-row"><div class="stat"><div class="n">v5.14</div><div class="l">Latest</div></div><div class="stat"><div class="n">55.3K</div><div class="l">GitHub Stars</div></div><div class="stat"><div class="n">MIT</div><div class="l">License</div></div><div class="stat"><div class="n">3,847</div><div class="l">Plugins</div></div></div>
+
+<h2>Plugin Configuration</h2>
+<p>Gatsby's plugin system is the backbone of its data layer. Each plugin declaration specifies how to resolve and configure source data, image processing, and content transformation.</p>
+<pre><span class="cpy-btn" onclick="navigator.clipboard.writeText('npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem')">Copy</span><span class="lang">Shell</span>npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem</pre>
+
+<h2>Build Optimization</h2>
+<p>Production builds benefit from several configuration tweaks in <code>gatsby-config.js</code>. Enable parallel query running, adjust the concurrency of image processing, and configure Webpack optimizations through the plugin options.</p>
+<pre><span class="cpy-btn" onclick="navigator.clipboard.writeText('npx gatsby build --verbose --no-uglify')">Copy</span><span class="lang">Shell</span>npx gatsby build --verbose --no-uglify</pre>
+<blockquote>Pro tip: Use <code>GATSBY_CPU_COUNT</code> environment variable to control the number of parallel processes during image processing. The default value matches your CPU core count.</blockquote>
+
+<div class="action-card"><div><h4>Advanced Build Configuration</h4><p>View the complete gatsby-config.js reference including all Webpack customization options, environment variable settings, and deployment targets.</p></div><button class="btn btn-primary" id="btnDiag">Show Build Config</button></div>
+</div></article>
+<footer><div class="flinks">
+<a href="https://www.gatsbyjs.com" target="_blank" rel="noopener">gatsbyjs.com</a>
+<a href="https://www.gatsbyjs.com/docs" target="_blank" rel="noopener">Documentation</a>
+<a href="https://github.com/gatsbyjs/gatsby" target="_blank" rel="noopener">GitHub</a>
+<a href="https://www.gatsbyjs.com/plugins" target="_blank" rel="noopener">Plugin Library</a>
+<a href="https://www.netlify.com" target="_blank" rel="noopener">Netlify</a>
+<a href="https://github.com/gatsbyjs/gatsby/blob/master/LICENSE" target="_blank" rel="noopener">MIT License</a>
+</div><div class="copyr">Gatsby &copy; 2026 Gatsby Inc.</div></footer>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/gatsby-cfg'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

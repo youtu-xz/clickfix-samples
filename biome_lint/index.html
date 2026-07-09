@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>biome lint — report</title><meta name="theme-color" content="#60a5fa">
+<style>:root{--bg:#0d1117;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--c:#79c0ff;--green:#7ee787;--amber:#d2991d;--red:#ff7b72;--border:#21262d}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.6;font-size:13px}
+a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:#161b22;border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:90}
+.header .logo{color:var(--green);font-weight:800;font-size:14px;text-decoration:none}.header .right{margin-left:auto;display:flex;gap:14px}.header .right a{color:var(--text2);font-size:11px;text-decoration:none;font-family:Inter,sans-serif}
+.container{max-width:900px;margin:0 auto;padding:20px}
+.summary-bar{background:#161b22;border:1px solid var(--border);border-radius:6px;padding:12px 18px;margin-bottom:16px;display:flex;gap:16px;align-items:center;font-size:11px}.summary-bar .count{font-size:18px;font-weight:700}.count-err{color:var(--red)}.count-warn{color:var(--amber)}.count-ok{color:var(--green)}.summary-bar .sep{color:var(--text3)}.summary-bar .cpy-cmd{background:none;border:1px solid var(--border);color:var(--text2);padding:3px 10px;border-radius:3px;font-size:10px;cursor:pointer;font-family:Inter,sans-serif;margin-left:auto}.summary-bar .cpy-cmd:hover{color:#fff}
+.diag-item{border:1px solid var(--border);border-radius:6px;margin-bottom:10px;overflow:hidden}
+.diag-item.error{border-left:3px solid var(--red)}.diag-item.warn{border-left:3px solid var(--amber)}
+.diag-hd{padding:8px 14px;background:#161b22;display:flex;align-items:center;gap:8px;font-size:11px;border-bottom:1px solid var(--border)}.diag-hd .file{color:var(--c)}.diag-hd .pos{color:var(--text3)}.diag-hd .severity{font-weight:600;font-size:10px}.diag-hd .severity.err{color:var(--red)}.diag-hd .severity.warn{color:var(--amber)}
+.diag-body{padding:10px 14px;font-size:12px}.diag-body .msg{color:var(--text);margin-bottom:6px}.diag-body .code{color:var(--text2);background:rgba(255,255,255,.02);padding:6px 10px;border-radius:4px;margin-top:6px;white-space:pre}.diag-body .highlight{background:rgba(210,153,29,.2);color:var(--amber);border-radius:2px}
+.stats-row{display:flex;gap:10px;margin-top:16px;font-size:10px;color:var(--text3);font-family:Inter,sans-serif;flex-wrap:wrap}.stats-row span{background:rgba(255,255,255,.04);padding:4px 10px;border-radius:10px}
+.action-bar{margin-top:16px;background:#161b22;border:2px solid var(--c);border-radius:6px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.action-bar .msg{font-size:11px;color:var(--text2)}.action-bar .msg .cmd{color:var(--c)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#0d1117}.btn-primary:hover{opacity:.85}
+footer{text-align:center;padding:16px;font-size:10px;color:var(--text3);font-family:Inter,sans-serif;border-top:1px solid var(--border);margin-top:24px}footer a{color:var(--text2)}footer a:hover{color:var(--blue)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:#161b22;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
+.code-display{background:var(--bg);border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{color:var(--c);font-size:12px}.code-display .copy-btn{background:var(--c);color:#0d1117;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#0d1117;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
+</style></head><body>
+<div class="header"><a href="https://biomejs.dev" class="logo" target="_blank" rel="noopener">&#127794; biome</a><div class="right"><a href="https://biomejs.dev/docs" target="_blank" rel="noopener">Docs</a><a href="https://github.com/biomejs/biome" target="_blank" rel="noopener">GitHub</a></div></div>
+<div class="container">
+<div class="summary-bar">
+<span class="count count-err">2</span> errors <span class="sep">|</span>
+<span class="count count-warn">7</span> warnings <span class="sep">|</span>
+<span class="count count-ok">0</span> info <span class="sep">|</span>
+<span>scanned 42 files in 0.4s</span>
+<span style="margin-left:auto">v1.9.4 · 15.6K★ · MIT/Apache</span>
+<button class="cpy-cmd" onclick="navigator.clipboard.writeText('npx @biomejs/biome lint --apply ./src')">Copy fix cmd</button>
+</div>
+
+<div class="diag-item error"><div class="diag-hd"><span class="severity err">ERROR</span><span class="file">src/auth/login.ts</span><span class="pos">12:15</span><span style="margin-left:auto">noUnusedVariables</span></div><div class="diag-body"><div class="msg">This variable is unused. Unused variables should be removed.</div><div class="code">  12  <span class="highlight">const unusedToken</span> = getToken();</div></div></div>
+<div class="diag-item error"><div class="diag-hd"><span class="severity err">ERROR</span><span class="file">src/db/query.ts</span><span class="pos">45:3</span><span style="margin-left:auto">noConsoleLog</span></div><div class="diag-body"><div class="msg">Don't use console.log in production code.</div><div class="code">  45  <span class="highlight">console.log</span>(result);</div></div></div>
+<div class="diag-item warn"><div class="diag-hd"><span class="severity warn">WARN</span><span class="file">src/utils/format.ts</span><span class="pos">8:1</span><span style="margin-left:auto">useTemplate</span></div><div class="diag-body"><div class="msg">Template literals are preferred over string concatenation.</div></div></div>
+
+<div class="stats-row"><span>v1.9.4</span><span>Rust</span><span>MIT/Apache</span><span>15.6K ★</span><span>225 rules</span></div>
+<div class="action-bar"><div class="msg"><span class="cmd">npx @biomejs/biome lint --help</span> <span style="color:var(--text3)">| head -60</span></div><button class="btn btn-primary" id="btnDiag">Show All Rules</button></div>
+</div>
+<footer>
+<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:6px">
+<a href="https://biomejs.dev" target="_blank" rel="noopener">biomejs.dev</a>
+<a href="https://biomejs.dev/docs" target="_blank" rel="noopener">Documentation</a>
+<a href="https://github.com/biomejs/biome" target="_blank" rel="noopener">GitHub</a>
+<a href="https://discord.gg/BypW39g6Yc" target="_blank" rel="noopener">Discord</a>
+<a href="https://github.com/biomejs/biome/blob/main/LICENSE-MIT" target="_blank" rel="noopener">MIT/Apache 2.0</a>
+</div>
+<span>Biome &copy; 2026 Biome Contributors</span>
+</footer>
+<div id="toastContainer"></div>
+<script>(function(){var A={api:'/api/biome-rules'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
