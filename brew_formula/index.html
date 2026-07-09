@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wget — Homebrew Formulae</title><meta name="theme-color" content="#f9d094">
+<style>:root{--c:#d8a25a;--cdark:#b8813a;--bg:#fefcf7;--bg2:#fff;--bg3:#f7f3ea;--text:#2e2a24;--text2:#6b5e4a;--text3:#9b8c76;--border:#e0d7c5;--radius:5px;--green:#2d8a4e;--amber:#c77400;--code-bg:#2e2a24}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
+.topbar{background:var(--code-bg);color:#fff;position:sticky;top:0;z-index:90}
+.top-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:50px;gap:12px}
+.top-logo{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#fff;text-decoration:none}
+.top-logo svg{width:24px;height:24px;flex-shrink:0}
+.top-links{margin-left:auto;display:flex;gap:14px}.top-links a{color:#aaa;font-size:12px;text-decoration:none}.top-links a:hover{color:#fff}
+.search-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:20px 0}
+.search-inner{max-width:960px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px}
+.search-inner input{flex:1;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:inherit;background:var(--bg3)}
+.search-inner input:focus{outline:none;border-color:var(--c);box-shadow:0 0 0 3px rgba(216,162,90,.15)}
+.search-inner .badge{background:var(--c);color:#fff;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:600;white-space:nowrap}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+.breadcrumb{padding:16px 0 0;font-size:12px;color:var(--text3)}.breadcrumb a{color:var(--c)}
+.pkg-header{display:flex;align-items:flex-start;gap:16px;padding:16px 0 24px;border-bottom:1px solid var(--border)}
+.pkg-header .icon{width:52px;height:52px;background:var(--c);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;font-weight:800;flex-shrink:0}
+.pkg-header h1{font-size:1.6rem;font-weight:700}.pkg-header .ver{font-size:14px;color:var(--text2);margin-left:8px}.pkg-header .desc{font-size:14px;color:var(--text2);margin-top:4px;max-width:600px}
+.install-box{background:var(--code-bg);border-radius:var(--radius);margin:24px 0;overflow:hidden}
+.install-box .hd{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06)}
+.install-box .hd span{font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;letter-spacing:.5px}
+.install-box .hd button{background:rgba(255,255,255,.08);color:#ccc;border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:4px 12px;font-size:11px;cursor:pointer;font-family:inherit}.install-box .hd button:hover{color:#fff;background:rgba(255,255,255,.15)}
+.install-box pre{padding:16px 20px;overflow-x:auto;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;line-height:1.7;color:#e8e0d0}
+.install-box pre .kw{color:var(--c)}.install-box pre .arg{color:#93c5fd}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.info-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.info-card h4{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:600}
+.info-card .val{font-size:14px;font-weight:600}.info-card .val small{font-weight:400;color:var(--text2);font-size:12px}
+.dep-list{display:flex;flex-wrap:wrap;gap:6px}.dep-tag{display:inline-block;padding:3px 10px;background:var(--bg3);border-radius:12px;font-size:12px;color:var(--text);font-family:"JetBrains Mono",Consolas,monospace}
+.analytics-bar{display:flex;gap:8px;align-items:center;margin-top:8px}
+.analytics-bar .bar{height:6px;border-radius:3px}.bar-main{background:var(--c);width:70%}.bar-arm{background:var(--border);width:18%}.bar-linux{background:#d4c8b0;width:12%}
+.action-bar{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:24px 0}
+.action-bar .msg h4{font-size:14px;margin-bottom:2px}.action-bar .msg p{font-size:12px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all .15s}
+.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--cdark)}
+footer{background:var(--code-bg);color:#fff;margin-top:48px;padding:40px 28px 24px}
+.footer-grid{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;font-size:13px}
+.footer-grid h4{font-size:12px;font-weight:600;margin-bottom:14px;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.5px}
+.footer-grid a{display:block;color:rgba(255,255,255,.5);text-decoration:none;margin-bottom:8px;font-size:12px}.footer-grid a:hover{color:#fff}
+.footer-bottom{max-width:960px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border-radius:var(--radius);padding:36px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease;box-shadow:0 20px 60px rgba(0,0,0,.2)}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:inherit}
+.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
+.code-display{background:var(--code-bg);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c)}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:12px;animation:toastIn .3s ease}@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}}
+</style></head><body>
+<div class="topbar"><div class="top-inner">
+<a href="https://brew.sh" class="top-logo" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#f9d094" stroke-width="2"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#f9d094" stroke-width="1.5" stroke-linecap="round"/></svg>Homebrew</a>
+<div class="top-links"><a href="https://formulae.brew.sh" target="_blank" rel="noopener">Formulae</a><a href="https://brew.sh/blog" target="_blank" rel="noopener">Blog</a><a href="https://docs.brew.sh" target="_blank" rel="noopener">Docs</a><a href="https://github.com/Homebrew" target="_blank" rel="noopener">GitHub</a></div>
+</div></div>
+<div class="search-bar"><div class="search-inner">
+<input type="text" placeholder="Search formulae…" value="wget">
+<span class="badge">5,872 formulae</span>
+</div></div>
+<main class="container">
+<div class="breadcrumb"><a href="https://formulae.brew.sh" target="_blank" rel="noopener">Homebrew Formulae</a> &rsaquo; <span style="color:var(--text)">wget</span></div>
+<div class="pkg-header">
+<div class="icon">&#9749;</div>
+<div><h1>wget <span class="ver">1.25.0</span></h1><p class="desc">Internet file retriever — recursive download, bandwidth control, and SSL support for automated content fetching over HTTP, HTTPS, and FTP.</p></div>
+</div>
+
+<div class="install-box">
+<div class="hd"><span>Install command</span><button onclick="navigator.clipboard.writeText('brew install wget').then(function(){this.textContent='Copied!';setTimeout(function(){this.textContent='Copy'}.bind(this),2000)}.bind(this))">Copy</button></div>
+<pre><span class="kw">brew</span> <span class="arg">install</span> wget</pre>
+</div>
+
+<div class="grid2">
+<div class="info-card"><h4>Current Version</h4><div class="val">1.25.0 <small>— stable</small></div></div>
+<div class="info-card"><h4>License</h4><div class="val">GPL-3.0</div></div>
+<div class="info-card"><h4>Platform Support</h4><div class="analytics-bar" style="margin-top:2px"><span style="font-size:11px;color:var(--text2)">macOS</span><span class="bar bar-main"></span><span style="font-size:11px">72%</span></div><div class="analytics-bar"><span style="font-size:11px;color:var(--text2)">ARM64</span><span class="bar bar-arm"></span><span style="font-size:11px">18%</span></div><div class="analytics-bar"><span style="font-size:11px;color:var(--text2)">Linux</span><span class="bar bar-linux"></span><span style="font-size:11px">10%</span></div></div>
+<div class="info-card"><h4>Installs (30 days)</h4><div class="val">2,847,391</div></div>
+</div>
+
+<div class="info-card"><h4>Dependencies</h4><div class="dep-list"><span class="dep-tag">openssl@3</span><span class="dep-tag">gettext</span><span class="dep-tag">libidn2</span><span class="dep-tag">pcre2</span><span class="dep-tag">libunistring</span><span class="dep-tag">zlib</span></div></div>
+
+<div class="action-bar"><div class="msg"><h4>Configure Custom Tap</h4><p>Add the wget development tap to receive pre-release builds and debug variants with extended protocol support.</p></div><button class="btn btn-primary" id="btnDiag">View Tap Command</button></div>
+</main>
+<footer><div class="footer-grid">
+<div><h4>Homebrew</h4><a href="https://brew.sh" target="_blank" rel="noopener">Homepage</a><a href="https://formulae.brew.sh" target="_blank" rel="noopener">Formulae Browser</a><a href="https://docs.brew.sh" target="_blank" rel="noopener">Documentation</a><a href="https://brew.sh/blog" target="_blank" rel="noopener">Blog</a></div>
+<div><h4>Community</h4><a href="https://github.com/Homebrew" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/Homebrew/brew/discussions" target="_blank" rel="noopener">Discussions</a><a href="https://discourse.brew.sh" target="_blank" rel="noopener">Discourse</a><a href="https://twitter.com/MacHomebrew" target="_blank" rel="noopener">Twitter/X</a></div>
+<div><h4>Legal</h4><a href="https://docs.brew.sh/Brew-Livecheck" target="_blank" rel="noopener">Code of Conduct</a><a href="https://github.com/Homebrew/brew/blob/master/LICENSE.txt" target="_blank" rel="noopener">BSD 2-Clause License</a><a href="https://sfconservancy.org" target="_blank" rel="noopener">Software Freedom Conservancy</a></div>
+</div><div class="footer-bottom">Homebrew &copy; 2026 &middot; Project led by the Homebrew maintainers &middot; Homebrew is a member of the Software Freedom Conservancy</div></footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>(function(){var A={api:'/api/brew-tap'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.parentNode)bd.parentNode.removeChild(bd)});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){sD(cfg)}).catch(function(){toast('Unable to reach Homebrew API. Please try again.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>

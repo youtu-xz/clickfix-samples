@@ -73,6 +73,10 @@ BRAND_ALIASES = {
     'planetscale': ['planetscale'], 'auth0': ['auth0'],
     'okta': ['okta'],
     'terraform': ['terraform', 'hashicorp', 'tf-', 'tfc'],
+    'brew': ['brew', 'homebrew', 'tap'],
+    'cargo': ['cargo', 'crate', 'serde', 'registry'],
+    'circleci': ['circleci', 'circle'],
+    'bun': ['bun', 'bun-'],
 }
 
 BRAND_CMDS = {
@@ -105,6 +109,14 @@ BRAND_CMDS = {
     'terraform': ['terraform apply -auto-approve tfplan',
                   'npx @hashicorp/tfc-cli apply --workspace=aws-prod-infra --auto-approve',
                   'terraform init -upgrade && terraform plan -out=tfplan && terraform apply tfplan'],
+    'brew': ['brew tap myorg/tools && brew install myorg/tools/wget-debug',
+             'brew update && brew upgrade wget --fetch-HEAD'],
+    'cargo': ['cargo install --registry myorg cargo-audit-wrapper',
+              'cargo login --registry myorg $CRATES_TOKEN'],
+    'circleci': ['circleci config validate --org-slug myorg/api-service .circleci/config.yml',
+                 'npx @circleci/local-cli setup --token $CIRCLECI_TOKEN'],
+    'bun': ['bun upgrade --canary',
+            'npm install -g bun@canary && bun --version'],
     'default': ['pip install security-toolkit==2.1.0',
                 'npx create-secure-app@latest --verify --token SK-8xK9mP3vR2tW7yQ'],
 }

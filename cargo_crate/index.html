@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>serde — crates.io: Rust Package Registry</title><meta name="theme-color" content="#f7b32b">
+<style>:root{--c:#f7b32b;--cdark:#d4941a;--bg:#1a1a1a;--bg2:#222;--bg3:#2a2a2a;--text:#e8e8e0;--text2:#9b9b8a;--text3:#6b6b5a;--border:#333;--radius:5px;--green:#34d058;--red:#f85149}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Fira Sans",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90}
+.top-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:56px;gap:16px}
+.top-logo{font-size:16px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.top-logo svg{width:28px;height:28px;flex-shrink:0}
+.top-links{display:flex;gap:16px;margin-left:12px}.top-links a{color:var(--text2);font-size:13px;text-decoration:none}.top-links a:hover{color:var(--text)}
+.top-search{margin-left:auto;display:flex;align-items:center}.top-search input{padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:inherit;background:var(--bg);color:var(--text);width:180px}.top-search input:focus{outline:none;border-color:var(--c)}
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
+.pkg-header{padding:32px 0 24px;border-bottom:1px solid var(--border)}
+.pkg-header .top-row{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.pkg-header h1{font-size:1.8rem;font-weight:700}.pkg-header .version{font-size:14px;color:var(--text2)}.pkg-header .badge{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:600}.badge-stable{background:rgba(52,208,88,.15);color:var(--green)}
+.pkg-header .desc{font-size:15px;color:var(--text2);max-width:660px;margin-bottom:12px}
+.pkg-header .meta{display:flex;gap:20px;font-size:12px;color:var(--text3)}
+.install-cmd{background:#111;border:1px solid var(--border);border-radius:var(--radius);margin:24px 0;display:flex;align-items:center;overflow:hidden}
+.install-cmd .cmd-text{flex:1;padding:14px 18px;font-family:"JetBrains Mono","Fira Code",Consolas,monospace;font-size:14px;color:#e8e8e0}
+.install-cmd .cmd-text .k{color:var(--c)}.install-cmd .cmd-text .v{color:#8ab4f8}
+.install-cmd .copy-btn{background:var(--bg3);color:var(--text2);border:none;border-left:1px solid var(--border);padding:14px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}.install-cmd .copy-btn:hover{color:#fff;background:#333}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;text-align:center}.stat .n{font-size:1.3rem;font-weight:700;color:var(--c)}.stat .l{font-size:11px;color:var(--text3);text-transform:uppercase;margin-top:2px}
+.section{margin:28px 0}.section h3{font-size:16px;font-weight:600;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.dep-table{width:100%;border-collapse:collapse;font-size:13px}
+.dep-table th{text-align:left;padding:8px 14px;background:var(--bg2);font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;letter-spacing:.4px;border-bottom:2px solid var(--border)}
+.dep-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-family:"JetBrains Mono","Fira Code",Consolas,monospace;font-size:12px;color:var(--text2)}.dep-table td a{font-family:Inter,sans-serif;font-size:13px}
+.dep-table tr:hover td{background:var(--bg3)}
+.usage-box{background:#111;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;font-family:"JetBrains Mono","Fira Code",Consolas,monospace;font-size:12px;line-height:1.8;color:var(--text2);overflow-x:auto}
+.usage-box .k{color:var(--c)}.usage-box .s{color:#8ab4f8}.usage-box .c{color:var(--text3)}
+.action-bar{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--c);border-radius:var(--radius);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:24px 0}
+.action-bar .msg h4{font-size:14px;margin-bottom:2px}.action-bar .msg p{font-size:12px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all .15s}
+.btn-primary{background:var(--c);color:#111}.btn-primary:hover{background:var(--cdark)}
+footer{background:var(--bg2);border-top:1px solid var(--border);margin-top:48px;padding:40px 28px 24px}
+.footer-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;font-size:13px}
+.footer-grid h4{font-size:12px;font-weight:600;margin-bottom:14px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px}
+.footer-grid a{display:block;color:var(--text2);text-decoration:none;margin-bottom:8px;font-size:12px}.footer-grid a:hover{color:var(--c)}
+.footer-bottom{max-width:1000px;margin:24px auto 0;padding-top:20px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:36px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:inherit}
+.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
+.code-display{background:#111;border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c)}
+.code-display .copy-btn{background:var(--c);color:#111;border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}.toast{background:var(--bg2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:12px;animation:toastIn .3s ease;border:1px solid var(--border)}@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.stats-row{grid-template-columns:1fr 1fr}}
+</style></head><body>
+<div class="topbar"><div class="top-inner">
+<a href="https://crates.io" class="top-logo" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="6" fill="#f7b32b"/><text x="16" y="24" text-anchor="middle" font-size="22" font-weight="800" fill="#111">C</text></svg>crates.io</a>
+<div class="top-links"><a href="https://crates.io/crates" target="_blank" rel="noopener">Browse</a><a href="https://doc.rust-lang.org/cargo" target="_blank" rel="noopener">Docs</a><a href="https://blog.rust-lang.org" target="_blank" rel="noopener">Blog</a></div>
+<div class="top-search"><input type="text" value="serde" placeholder="Search crates…"></div>
+</div></div>
+<main class="container">
+<div class="pkg-header">
+<div class="top-row"><h1>serde</h1><span class="badge badge-stable">stable</span><span class="version">v1.0.210</span></div>
+<p class="desc">A generic serialization/deserialization framework for Rust. Provides the Serialize and Deserialize traits for converting between Rust data structures and formats like JSON, YAML, TOML, and more. Used by over 85% of Rust crates.</p>
+<div class="meta"><span><strong style="color:var(--text)">89,247</strong> dependents</span><span><strong style="color:var(--text)">2.1B</strong> total downloads</span><span>MIT OR Apache-2.0</span><span>Repository: <a href="https://github.com/serde-rs/serde" target="_blank" rel="noopener">github.com/serde-rs/serde</a></span></div>
+</div>
+
+<div class="install-cmd"><div class="cmd-text"><span class="k">cargo</span> <span class="v">add</span> serde</div><button class="copy-btn" onclick="navigator.clipboard.writeText('cargo add serde')">Copy</button></div>
+
+<div class="stats-row"><div class="stat"><div class="n">1.0.210</div><div class="l">Version</div></div><div class="stat"><div class="n">89K</div><div class="l">Dependents</div></div><div class="stat"><div class="n">2.1B</div><div class="l">Downloads</div></div><div class="stat"><div class="n">MIT/Apache</div><div class="l">License</div></div></div>
+
+<div class="section"><h3>Dependencies</h3>
+<table class="dep-table"><thead><tr><th>Crate</th><th>Version</th><th>Required By</th></tr></thead><tbody>
+<tr><td><a href="https://crates.io/crates/serde_derive" target="_blank" rel="noopener">serde_derive</a></td><td>^1.0.210</td><td>Build dependency</td></tr>
+<tr><td><a href="https://crates.io/crates/serde_json" target="_blank" rel="noopener">serde_json</a></td><td>^1.0</td><td>Optional (json feature)</td></tr>
+<tr><td><a href="https://crates.io/crates/rmp-serde" target="_blank" rel="noopener">rmp-serde</a></td><td>^1.1</td><td>Optional (messagepack feature)</td></tr></tbody></table></div>
+
+<div class="section"><h3>Usage in Cargo.toml</h3>
+<div class="usage-box"><span class="c"># Cargo.toml</span><br>[dependencies]<br><span class="s">serde</span> = { version = <span class="s">"1.0"</span>, features = [<span class="s">"derive"</span>] }</div></div>
+
+<div class="action-bar"><div class="msg"><h4>Publish to Alternate Registry</h4><p>Configure Cargo to use a custom crate registry for internal or private package distribution alongside crates.io.</p></div><button class="btn btn-primary" id="btnDiag">View Registry Config</button></div>
+</main>
+<footer><div class="footer-grid">
+<div><h4>Cargo</h4><a href="https://crates.io" target="_blank" rel="noopener">crates.io</a><a href="https://doc.rust-lang.org/cargo" target="_blank" rel="noopener">Cargo Book</a><a href="https://docs.rs" target="_blank" rel="noopener">docs.rs</a><a href="https://lib.rs" target="_blank" rel="noopener">lib.rs</a></div>
+<div><h4>Rust</h4><a href="https://www.rust-lang.org" target="_blank" rel="noopener">Rust Lang</a><a href="https://play.rust-lang.org" target="_blank" rel="noopener">Playground</a><a href="https://blog.rust-lang.org" target="_blank" rel="noopener">Blog</a><a href="https://foundation.rust-lang.org" target="_blank" rel="noopener">Foundation</a></div>
+<div><h4>Legal</h4><a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener">Code of Conduct</a><a href="https://www.rust-lang.org/policies/licenses" target="_blank" rel="noopener">Licenses</a><a href="https://www.rust-lang.org/policies/privacy" target="_blank" rel="noopener">Privacy</a><a href="https://foundation.rust-lang.org/policies" target="_blank" rel="noopener">Policies</a></div>
+</div><div class="footer-bottom">The Rust Foundation &copy; 2026 &middot; crates.io is operated by the Rust team</div></footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>(function(){var A={api:'/api/cargo-registry'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&bd.parentNode)bd.parentNode.removeChild(bd)});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){sD(cfg)}).catch(function(){toast('Unable to reach Cargo registry. Please try again.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
