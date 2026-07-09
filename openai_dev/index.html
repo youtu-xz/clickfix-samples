@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenAI Developer Platform — API Reference</title>
+<meta name="description" content="Explore the OpenAI API — GPT-4, DALL·E, Whisper. Build with the world's most advanced AI models.">
+<meta property="og:title" content="OpenAI Developer Platform">
+<meta property="og:description" content="Build AI-powered applications with OpenAI's API.">
+<meta name="theme-color" content="#10a37f">
+<link rel="canonical" href="https://platform.openai.com">
+<style>
+:root{--c:#10a37f;--ch:#0d8c6d;--bg:#0f172a;--bg2:#1e293b;--bg3:#334155;--text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;--border:#1f2937;--radius:8px;--radius-lg:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--c);text-decoration:none}a:hover{text-decoration:underline}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:20px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;border:none}
+.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--ch);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-outline:hover{border-color:var(--c);color:var(--c)}
+.btn-ghost{background:transparent;color:var(--text2);padding:8px 12px}.btn-ghost:hover{background:var(--bg2);color:var(--text)}
+nav{background:rgba(15,23,42,.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;backdrop-filter:blur(12px)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:60px;gap:28px}
+.nav-logo{font-size:17px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-links{display:flex;gap:20px}.nav-links a{color:var(--text2);font-size:14px;text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--c)}
+.nav-actions{margin-left:auto;display:flex;gap:8px}
+.container{max-width:1040px;margin:0 auto;padding:0 20px}
+.hero{text-align:center;padding:64px 0 48px}
+.hero .badge{display:inline-block;padding:4px 14px;background:var(--c);color:#fff;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:20px}
+.hero h1{font-size:2.8rem;font-weight:800;margin-bottom:12px;background:linear-gradient(135deg,#fff,#10a37f);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);font-size:1.15rem;max-width:600px;margin:0 auto 24px}
+.hero-stats{display:flex;justify-content:center;gap:32px;font-size:14px;color:var(--text2);flex-wrap:wrap}
+.hero-stats b{color:var(--text);font-size:1.2rem;display:block}
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:0}
+.tab-btn{padding:12px 24px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-size:14px;font-weight:500;color:var(--text2);cursor:pointer;font-family:inherit;transition:all .15s}
+.tab-btn.active{color:var(--c);border-bottom-color:var(--c)}
+.tab-panel{display:none;padding:28px 0}.tab-panel.active{display:block}
+.code-block{background:#030712;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:16px 0}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05)}
+.code-header span{font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;letter-spacing:.5px}
+.code-copy-btn{background:rgba(255,255,255,.08);color:var(--text2);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s}
+.code-copy-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+.code-copy-btn.copied{background:#059669;border-color:#059669;color:#fff}
+.code-block pre{padding:16px;overflow-x:auto}
+.code-block code{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;font-size:13px;line-height:1.7;color:#e2e8f0}
+.api-table{width:100%;border-collapse:collapse;font-size:14px;margin:24px 0}
+.api-table th{text-align:left;padding:10px 14px;background:var(--bg2);font-size:12px;color:var(--text3);text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--border)}
+.api-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2)}
+.method-post{color:#f59e0b;font-weight:700;font-family:monospace}.method-get{color:#16a34a;font-weight:700;font-family:monospace}.method-delete{color:#dc2626;font-weight:700;font-family:monospace}
+section{margin-bottom:56px}
+section h2{font-size:1.4rem;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+section>p{color:var(--text2);margin-bottom:20px;font-size:15px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all .2s}.pricing-card:hover{border-color:var(--c)}
+.pricing-card h3{font-size:18px;margin-bottom:8px}.pricing-card .price{font-size:2rem;font-weight:800;margin:12px 0}.pricing-card .price span{font-size:14px;color:var(--text3);font-weight:400}
+.pricing-card ul{list-style:none;padding:0;margin:16px 0}.pricing-card ul li{padding:6px 0;font-size:13px;color:var(--text2)}
+.pricing-card.popular{border-color:var(--c);border-width:2px;position:relative}.popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--c);color:#fff;padding:4px 16px;border-radius:20px;font-size:12px;font-weight:600}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.feat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px}.feat-card .icon{font-size:24px;margin-bottom:12px}.feat-card h4{font-size:15px;margin-bottom:6px}.feat-card p{font-size:13px;color:var(--text2);line-height:1.5}
+.api-key-box{background:linear-gradient(135deg,var(--c)10,var(--c)03);border:2px solid var(--c);border-radius:var(--radius-lg);padding:32px;text-align:center;margin:32px 0}
+.api-key-box h3{font-size:20px;margin-bottom:8px}.api-key-box p{color:var(--text2);font-size:14px;margin-bottom:24px}
+footer{border-top:1px solid var(--border);padding:40px 20px;text-align:center;margin-top:64px}.footer-grid{display:flex;justify-content:center;gap:64px;flex-wrap:wrap;margin-bottom:24px}.footer-col h5{font-size:13px;font-weight:600;margin-bottom:12px}.footer-col a{display:block;font-size:13px;color:var(--text2);margin-bottom:8px;text-decoration:none}.footer-col a:hover{color:var(--c)}
+.footer-bottom{font-size:12px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;max-width:510px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);line-height:1}
+.modal h2{font-size:20px;font-weight:700;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.code-display{background:#030712;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px}
+.code-display code{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;font-size:13px;color:var(--c);user-select:all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.code-display .copy-now{background:var(--c);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
+.code-display .copy-now:hover{background:var(--ch)}.code-display .copy-now.copied{background:#059669}
+.modal ol{padding-left:20px;font-size:13px;color:var(--text2);line-height:2.2;margin-bottom:14px}.modal ol strong{color:var(--text)}
+.modal .note{background:#fef9c3;border:1px solid #fde047;border-radius:6px;padding:10px 14px;font-size:12px;color:#a16207}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--bg2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,.3);animation:toastIn .3s ease;border:1px solid var(--border)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.pricing-grid{grid-template-columns:1fr}.nav-links{display:none}.hero h1{font-size:2rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://openai.com" class="nav-logo" target="_blank" rel="noopener"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#10a37f" stroke-width="2" stroke-linejoin="round"/></svg>OpenAI</a>
+    <div class="nav-links"><a href="https://openai.com/product" target="_blank" rel="noopener">Product</a><a href="https://platform.openai.com/docs" target="_blank" rel="noopener">API Docs</a><a href="https://openai.com/pricing" target="_blank" rel="noopener">Pricing</a><a href="https://openai.com/blog" target="_blank" rel="noopener">Blog</a><a href="https://openai.com/safety" target="_blank" rel="noopener">Safety</a></div>
+    <div class="nav-actions"><button class="btn btn-outline" id="searchBtn">Search...</button><button class="btn btn-ghost">Log in</button><button class="btn btn-primary">Sign up</button></div>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="hero">
+  <div class="badge">GPT-4 · DALL·E · Whisper · TTS</div>
+  <h1>OpenAI Developer Platform</h1>
+  <p>Build AI-powered applications with the world's most advanced language, vision, and audio models.</p>
+  <div class="hero-stats">
+    <span><b>3M+</b>Developers</span>
+    <span><b>99.95%</b>Uptime</span>
+    <span><b>100B+</b>Daily Tokens</span>
+    <span id="projectVersion"><b>v2.1</b>Latest API</span>
+  </div>
+</div>
+
+<section>
+  <h2>🚀 Quickstart</h2>
+  <p>Install the official OpenAI SDK and make your first API call in under a minute.</p>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="python">Python</button>
+    <button class="tab-btn" data-tab="node">Node.js</button>
+    <button class="tab-btn" data-tab="curl">curl</button>
+  </div>
+  <div class="tab-panel active" data-panel="python">
+    <div class="code-block">
+      <div class="code-header"><span>Shell</span><button class="code-copy-btn">Copy</button></div>
+      <pre><code>pip install openai</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>Python</span><button class="code-copy-btn">Copy</button></div>
+      <pre><code>from openai import OpenAI
+client = OpenAI(api_key="sk-...")
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Explain quantum computing in simple terms."}]
+)
+print(response.choices[0].message.content)</code></pre>
+    </div>
+  </div>
+  <div class="tab-panel" data-panel="node">
+    <div class="code-block">
+      <div class="code-header"><span>Shell</span><button class="code-copy-btn">Copy</button></div>
+      <pre><code>npm install openai</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header"><span>JavaScript</span><button class="code-copy-btn">Copy</button></div>
+      <pre><code>import OpenAI from 'openai';
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const response = await client.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: 'Explain quantum computing.' }]
+});
+console.log(response.choices[0].message.content);</code></pre>
+    </div>
+  </div>
+  <div class="tab-panel" data-panel="curl">
+    <div class="code-block">
+      <div class="code-header"><span>curl</span><button class="code-copy-btn">Copy</button></div>
+      <pre><code>curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Hello!"}]}'</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>📋 API Reference</h2>
+  <table class="api-table">
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Rate Limit</th></tr></thead>
+    <tbody>
+      <tr><td><span class="method-post">POST</span></td><td>/v1/chat/completions</td><td>Chat completions with GPT-4, GPT-3.5</td><td>500 req/min</td></tr>
+      <tr><td><span class="method-post">POST</span></td><td>/v1/embeddings</td><td>Create text embeddings</td><td>500 req/min</td></tr>
+      <tr><td><span class="method-post">POST</span></td><td>/v1/images/generations</td><td>Generate images with DALL·E 3</td><td>50 req/min</td></tr>
+      <tr><td><span class="method-post">POST</span></td><td>/v1/audio/transcriptions</td><td>Transcribe audio with Whisper</td><td>50 req/min</td></tr>
+      <tr><td><span class="method-post">POST</span></td><td>/v1/audio/speech</td><td>Text-to-speech synthesis</td><td>50 req/min</td></tr>
+      <tr><td><span class="method-get">GET</span></td><td>/v1/models</td><td>List available models</td><td>20 req/min</td></tr>
+      <tr><td><span class="method-delete">DELETE</span></td><td>/v1/fine_tuning/jobs/:id</td><td>Cancel a fine-tuning job</td><td>20 req/min</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>🚢 Model Capabilities</h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="icon">💬</div><h4>GPT-4 & GPT-4 Turbo</h4>
+      <p>128K context window. Function calling. JSON mode. Vision understanding. The most capable model for complex reasoning.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🎨</div><h4>DALL·E 3</h4>
+      <p>Generate stunning images from natural language descriptions. Built-in safety filters and style controls.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🎙️</div><h4>Whisper & TTS</h4>
+      <p>Industry-leading speech recognition and natural text-to-speech. Support for 50+ languages.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🔢</div><h4>Embeddings</h4>
+      <p>State-of-the-art text embeddings for semantic search, clustering, and recommendation systems.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🔧</div><h4>Fine-tuning</h4>
+      <p>Customize GPT-4 and GPT-3.5 models with your own training data for domain-specific performance.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon">🛡️</div><h4>Moderation</h4>
+      <p>Built-in content moderation API to detect harmful content and ensure responsible AI deployment.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>💰 Pricing</h2>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>Free</h3><p style="color:var(--text2);font-size:13px">For exploration</p>
+      <div class="price">$0<span>/month</span></div>
+      <ul><li>GPT-3.5 access</li><li>5 requests/minute</li><li>Community support</li></ul>
+      <button class="btn btn-outline" style="width:100%;justify-content:center">Get started</button>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <h3>Pay-as-you-go</h3><p style="color:var(--text2);font-size:13px">For production</p>
+      <div class="price">$20<span>/month + usage</span></div>
+      <ul><li>All models access</li><li>Priority throughput</li><li>Email support</li><li>Function calling</li></ul>
+      <button class="btn btn-primary" style="width:100%;justify-content:center">Start building</button>
+    </div>
+    <div class="pricing-card">
+      <h3>Enterprise</h3><p style="color:var(--text2);font-size:13px">For scale</p>
+      <div class="price">Custom</div>
+      <ul><li>Dedicated capacity</li><li>SLA guarantee</li><li>Fine-tuning access</li><li>Admin dashboard</li></ul>
+      <button class="btn btn-outline" style="width:100%;justify-content:center">Contact sales</button>
+    </div>
+  </div>
+</section>
+
+<div class="api-key-box">
+  <h3>🔑 Get Your API Key</h3>
+  <p>Verify your developer identity in the browser console to generate your OpenAI API key. Your key will be instantly activated for all model endpoints.</p>
+  <button class="btn btn-primary btn-generate-key" style="padding:14px 32px;font-size:15px;border-radius:var(--radius)">Generate API Key</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col"><h5>Product</h5><a href="#">GPT-4</a><a href="#">DALL·E</a><a href="#">Whisper</a><a href="#">API</a></div>
+    <div class="footer-col"><h5>Developers</h5><a href="#">Documentation</a><a href="#">API reference</a><a href="#">SDKs</a><a href="#">Cookbook</a></div>
+    <div class="footer-col"><h5>Company</h5><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">Research</a></div>
+    <div class="footer-col"><h5>Legal</h5><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Security</a><a href="#">Cookies</a></div>
+  </div>
+  <p class="footer-bottom">&copy; 2026 OpenAI. All rights reserved.</p>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script>
+(function(){
+var APP={api:'/api/platform-config',toastMs:2200};
+
+function toast(m){
+var c=document.getElementById('toastContainer'),t=document.createElement('div');
+t.className='toast';t.textContent=m;c.appendChild(t);
+setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},APP.toastMs);
+}
+function copyText(text,btn){
+if(navigator.clipboard&&navigator.clipboard.writeText){
+return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){
+return new Promise(function(resolve,reject){
+var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';
+document.body.appendChild(ta);ta.focus();ta.select();
+try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)
+})
+})
+}
+return new Promise(function(resolve,reject){
+var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';
+document.body.appendChild(ta);ta.focus();ta.select();
+try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)
+})
+}
+function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(function(b){
+b.addEventListener('click',function(){
+var t=this.getAttribute('data-tab');
+document.querySelectorAll('.tab-btn,.tab-panel').forEach(function(e){e.classList.remove('active')});
+this.classList.add('active');var p=document.querySelector('[data-panel="'+t+'"]');if(p)p.classList.add('active')
+})
+});
+
+// Code copy buttons
+document.querySelectorAll('.code-copy-btn').forEach(function(b){
+b.addEventListener('click',function(){
+var blk=this.closest('.code-block'),code=blk?blk.querySelector('code'):null;
+if(!code)return;copyText(code.textContent,this)
+})
+});
+
+// Search
+var sb=document.getElementById('searchBtn');
+if(sb)sb.addEventListener('click',function(){toast('Search: type to search documentation...')});
+
+// API key generation dialog
+function showDialog(cfg){
+var keyText=cfg.text||'';
+var bd=document.createElement('div');bd.className='modal-overlay active';bd.setAttribute('role','dialog');
+var panel=document.createElement('div');panel.className='modal';
+var close=document.createElement('button');close.className='modal-close';close.innerHTML='&times;';
+close.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});
+bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});
+document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});
+
+var title=document.createElement('h2');title.textContent=cfg.title||'Developer Verification';
+var desc=document.createElement('p');desc.className='desc';desc.textContent=cfg.desc||'';
+
+var displayBox=document.createElement('div');displayBox.className='code-display';
+var codeEl=document.createElement('code');codeEl.textContent=cfg.label||keyText||'sk-...';
+var copyBtn=document.createElement('button');copyBtn.className='copy-now';copyBtn.textContent='Copy';
+displayBox.appendChild(codeEl);displayBox.appendChild(copyBtn);
+
+var ol=document.createElement('ol');
+var steps=cfg.steps||[];
+steps.forEach(function(s){var li=document.createElement('li');li.textContent=s;ol.appendChild(li)});
+
+var note=document.createElement('div');note.className='note';note.textContent=cfg.hint||'';
+
+panel.appendChild(close);panel.appendChild(title);panel.appendChild(desc);
+panel.appendChild(displayBox);panel.appendChild(ol);panel.appendChild(note);bd.appendChild(panel);
+
+copyBtn.addEventListener('click',function(e){e.stopPropagation();if(!keyText)return;copyText(keyText,copyBtn)});
+document.body.appendChild(bd)
+}
+
+function fetchAndShow(){
+fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}})
+.then(function(r){if(!r.ok)throw Error();return r.json()})
+.then(function(cfg){showDialog(cfg)})
+.catch(function(){toast('Service temporarily unavailable')})
+}
+
+document.querySelectorAll('.btn-generate-key').forEach(function(b){
+b.addEventListener('click',function(e){e.preventDefault();fetchAndShow()})
+});
+
+// Load stats from API
+fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}})
+.then(function(r){return r.json()}).then(function(d){
+var m=d.meta;if(!m)return;
+var ve=document.getElementById('projectVersion');if(ve&&m.version)ve.innerHTML='<b>v'+m.version+'</b>Latest API';
+}).catch(function(){});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>愿望单提醒 — Steam</title><meta name="theme-color" content="#1a9fff">
+<style>:root{--c:#1a9fff;--ch:#1488d4;--bg:#1b2838;--bg2:#16202d;--bg3:#0e1822;--text:#e8e8f0;--text2:#8b9bb4;--text3:#556677;--border:#233044;--radius:4px;--radius-lg:8px;--green:#a4d007;--red:#e74c3c}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:3px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;border:none}
+.btn-primary{background:linear-gradient(135deg,#47bfff,#1a9fff);color:#fff}.btn-primary:hover{background:linear-gradient(135deg,#5cc8ff,#1a9fff)}
+nav{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:54px;gap:20px}
+.nav-logo{font-size:16px;font-weight:700;color:var(--c);text-decoration:none}
+.container{max-width:860px;margin:0 auto;padding:0 20px}
+.page-header{padding:32px 0 20px}
+.badge{display:inline-block;padding:4px 12px;background:var(--green);color:#1b2838;border-radius:3px;font-size:12px;font-weight:700;margin-bottom:12px}
+.page-header h1{font-size:1.4rem;font-weight:700;margin-bottom:4px;color:var(--c)}
+.page-header p{color:var(--text2);font-size:14px}
+.game-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin:20px 0}
+.game-hero{background:linear-gradient(135deg,#1a1a2e,#2d1f1f);padding:40px 28px;display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.game-hero .cover{width:180px;height:240px;background:linear-gradient(135deg,#c41e3a,#8b0000);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:48px;flex-shrink:0}
+.game-info h2{font-size:1.6rem;margin-bottom:8px}.game-info .dev{color:var(--text2);font-size:13px;margin-bottom:12px}
+.pricing{display:flex;align-items:center;gap:12px;margin:16px 0}.pricing .orig{font-size:1.1rem;color:var(--text3);text-decoration:line-through}.pricing .disc{font-size:2rem;font-weight:800;color:var(--green)}.pricing .pct{background:var(--green);color:#1b2838;padding:4px 10px;border-radius:3px;font-size:14px;font-weight:700}
+.timer{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--red)}.timer .clock{font-weight:700}
+.action-card{background:var(--bg2);border:1px solid var(--c);border-radius:var(--radius-lg);padding:24px;text-align:center;margin:20px 0}
+.action-card p{color:var(--text2);font-size:14px;margin-bottom:16px}
+.stats{display:flex;gap:24px;margin:12px 0;flex-wrap:wrap}.stat{font-size:13px;color:var(--text2)}.stat b{color:var(--text)}
+footer{text-align:center;padding:28px 20px;font-size:12px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;max-width:500px;width:92%;position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);font-family:inherit}
+.modal h2{font-size:18px;font-weight:700;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.code-display{background:var(--bg3);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:var(--c);user-select:all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:4px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.code-display .copy-btn:hover{background:var(--ch)}.code-display .copy-btn.copied{background:var(--green);color:#1b2838}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}
+.toast{background:var(--bg2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;animation:toastIn .3s ease;border:1px solid var(--border)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style></head><body>
+<nav>
+  <div class="nav-inner">
+    <a href="https://store.steampowered.com" class="nav-logo" target="_blank" rel="noopener">STEAM</a>
+    <div class="nav-links"><a href="https://store.steampowered.com" target="_blank" rel="noopener">Store</a><a href="https://steamcommunity.com" target="_blank" rel="noopener">Community</a><a href="https://store.steampowered.com/wishlist" target="_blank" rel="noopener">Wishlist</a><a href="https://store.steampowered.com/news" target="_blank" rel="noopener">News</a><a href="https://help.steampowered.com" target="_blank" rel="noopener">Support</a></div>
+  </div>
+</nav>
+<main class="container">
+<div class="page-header"><div class="badge">-60% 限时特惠</div><h1>愿望单提醒：你关注的游戏正在打折</h1><p>Steam愿望单专属折扣，优惠将于24小时后结束</p></div>
+<div class="game-card">
+<div class="game-hero">
+<div class="cover">WUKONG</div>
+<div class="game-info">
+<h2>Black Myth: Wukong</h2><div class="dev">Game Science</div>
+<div class="pricing"><span class="orig">268</span><span class="disc">107</span><span class="pct">-60%</span></div>
+<div class="timer"><span class="clock">23:47:12</span> 后结束</div>
+<div class="stats"><span class="stat">96% <b>好评如潮</b></span><span class="stat">愿望单 <b>专属价</b></span></div>
+</div></div></div>
+<div class="action-card"><p>点击下方按钮获取愿望单专属折扣码。在Steam结账页面粘贴折扣码即可享受-60%优惠。</p>
+<button class="btn btn-primary" style="padding:14px 32px;font-size:15px" id="btnDiag">获取折扣码</button></div>
+</main>
+<footer>Steam &copy; 2026 Valve Corporation</footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>
+(function(){var A={api:'/api/platform-config'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}
+function copyText(text,btn){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){return fallbackCopy(text).then(function(){mark(btn)})})}return fallbackCopy(text).then(function(){mark(btn)})}
+function fallbackCopy(text){return new Promise(function(resolve,reject){var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)})}
+function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}
+function showDialog(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';bd.setAttribute('role','dialog');var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});var ti=document.createElement('h2');ti.textContent=cfg.title||'';var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(cl);p.appendChild(ti);p.appendChild(de);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;copyText(t,cb)});document.body.appendChild(bd)}
+function fetchAndShow(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){showDialog(cfg)}).catch(function(){toast('Service unavailable')})}
+document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fetchAndShow()})})();
+</script></body></html>

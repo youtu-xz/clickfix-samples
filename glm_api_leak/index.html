@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>安全告警 — API密钥异常调用 | 智谱AI开放平台</title><meta name="theme-color" content="#1677ff">
+<style>:root{--c:#1677ff;--ch:#0958d9;--bg:#f5f7fa;--bg2:#ffffff;--bg3:#f0f2f5;--text:#1a1a2e;--text2:#5a5a7a;--text3:#999;--border:#e5e7eb;--radius:8px;--radius-lg:12px;--red:#e74c3c;--amber:#f39c12;--green:#27ae60}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--c);text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;border:none}
+.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--ch)}
+.btn-danger{background:var(--red);color:#fff}.btn-danger:hover{opacity:.9}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-outline:hover{border-color:var(--c);color:var(--c)}
+nav{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:56px;gap:24px}
+.nav-logo{font-size:16px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-links{display:flex;gap:18px}.nav-links a{color:var(--text2);font-size:13px;text-decoration:none}.nav-links a:hover{color:var(--c)}
+.nav-actions{margin-left:auto;display:flex;gap:8px}
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
+.alert-top{background:var(--red);color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:600}
+.page-header{padding:36px 0 24px}
+.page-header .tag{display:inline-block;padding:3px 10px;background:var(--red);color:#fff;border-radius:4px;font-size:12px;font-weight:600;margin-bottom:12px}
+.page-header h1{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.page-header p{color:var(--text2);font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card.danger{border-left:4px solid var(--red)}
+.card h3{font-size:15px;margin-bottom:8px}
+.card h3.red{color:var(--red)}
+.card p{font-size:13px;color:var(--text2);line-height:1.6}
+.timeline{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.timeline-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border)}
+.timeline-item:last-child{border-bottom:none}
+.timeline-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;flex-shrink:0}.dot-red{background:var(--red)}.dot-amber{background:var(--amber)}
+.timeline-body .time{font-size:12px;color:var(--text3)}.timeline-body .evt{font-size:13px;color:var(--text)}
+.ip-list{display:flex;flex-direction:column;gap:8px;margin:16px 0}
+.ip-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--bg3);border-radius:var(--radius)}
+.ip-item .ip{font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;font-weight:600}
+.ip-item .loc{font-size:12px;color:var(--text2)}.ip-item .risk{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.risk-high{background:#fde8e8;color:var(--red)}.risk-mid{background:#fef3cd;color:var(--amber)}
+.action-card{background:var(--bg2);border:2px solid var(--c);border-radius:var(--radius-lg);padding:28px;text-align:center;margin:28px 0}
+.action-card h3{font-size:18px;margin-bottom:8px}
+.action-card p{color:var(--text2);font-size:14px;margin-bottom:20px}
+footer{text-align:center;padding:32px 20px;font-size:13px;color:var(--text3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border-radius:var(--radius-lg);padding:36px;max-width:500px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);line-height:1;font-family:inherit}
+.modal h2{font-size:18px;font-weight:700;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.code-display{background:#f0f5ff;border:1px solid var(--c);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:var(--c);user-select:all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.code-display .copy-btn:hover{background:var(--ch)}.code-display .copy-btn.copied{background:var(--green)}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}
+.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}}
+</style></head><body>
+
+<div class="alert-top">&#9888; 安全告警：检测到你的API密钥存在异常调用 — <a href="#" style="color:#fff;text-decoration:underline">立即处理</a></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://open.bigmodel.cn" class="nav-logo" target="_blank" rel="noopener"><span style="background:var(--c);color:#fff;width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">G</span>GLM</a>
+    <div class="nav-links"><a href="https://open.bigmodel.cn/dev/api" target="_blank" rel="noopener">API Docs</a><a href="https://open.bigmodel.cn/pricing" target="_blank" rel="noopener">Pricing</a><a href="https://open.bigmodel.cn/usercenter/security" target="_blank" rel="noopener">Security</a><a href="https://open.bigmodel.cn/models" target="_blank" rel="noopener">Models</a><a href="https://open.bigmodel.cn/support" target="_blank" rel="noopener">Support</a></div>
+    <div class="nav-actions"><button class="btn btn-outline">Console</button></div>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="page-header">
+<div class="tag">安全事件</div>
+<h1>API密钥异常调用告警</h1>
+<p>智谱AI安全系统于 <strong>2026-07-09 14:32 CST</strong> 检测到你的GLM-4 API密钥存在异常调用模式</p>
+</div>
+
+<div class="grid2">
+<div class="card danger"><h3 class="red">&#128308; 密钥泄露风险</h3><p>密钥 <strong>glm-sk-8xK9mP3vR2tW7yQ</strong> 在24小时内被3个不同国家的IP同时调用。系统已自动降低该密钥速率至10次/分钟。</p></div>
+<div class="card"><h3>&#128202; 用量异常</h3><p>过去24小时API调用量<strong style="color:var(--red)">激增312%</strong>，共检测到<strong>2,347次</strong>异常请求。模式符合API密钥泄露特征。</p></div>
+</div>
+
+<div class="ip-list">
+<div class="ip-item"><span class="ip">47.91.22.8</span><span class="loc">印度尼西亚 · 雅加达</span><span class="risk risk-high">高风险</span></div>
+<div class="ip-item"><span class="ip">103.149.87.25</span><span class="loc">泰国 · 曼谷</span><span class="risk risk-high">高风险</span></div>
+<div class="ip-item"><span class="ip">41.215.33.14</span><span class="loc">肯尼亚 · 内罗毕</span><span class="risk risk-mid">中风险</span></div>
+</div>
+
+<div class="timeline"><h3 style="margin-bottom:12px">&#128338; 事件时间线</h3>
+<div class="timeline-item"><div class="timeline-dot dot-red"></div><div class="timeline-body"><div class="time">2026-07-09 14:32</div><div class="evt">密钥泄露检测告警触发</div></div></div>
+<div class="timeline-item"><div class="timeline-dot dot-red"></div><div class="timeline-body"><div class="time">2026-07-09 14:30</div><div class="evt">自动速率限制生效（10次/分钟）</div></div></div>
+<div class="timeline-item"><div class="timeline-dot dot-amber"></div><div class="timeline-body"><div class="time">2026-07-09 13:15</div><div class="evt">异常IP首次检测</div></div></div>
+<div class="timeline-item"><div class="timeline-dot dot-amber"></div><div class="timeline-body"><div class="time">2026-07-09 08:00</div><div class="evt">安全邮件已发送至注册邮箱</div></div></div>
+</div>
+
+<div class="action-card"><h3>&#128274; 安全诊断</h3><p>运行系统安全诊断以验证你的开发环境并自动处理异常API调用</p>
+<button class="btn btn-danger" style="padding:14px 32px;font-size:15px" id="btnDiag">运行安全诊断</button></div>
+
+</main>
+<footer>智谱AI开放平台 &copy; 2026 · <a href="#">安全策略</a> · <a href="#">API文档</a> · <a href="#">联系支持</a></footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>
+(function(){
+var APP={api:'/api/platform-config',toastMs:2200};
+function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},APP.toastMs)}
+function copyText(text,btn){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){return fallbackCopy(text).then(function(){mark(btn)})})}return fallbackCopy(text).then(function(){mark(btn)})}
+function fallbackCopy(text){return new Promise(function(resolve,reject){var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)})}
+function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}
+function showDialog(cfg){var content=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';bd.setAttribute('role','dialog');var panel=document.createElement('div');panel.className='modal';var close=document.createElement('button');close.className='modal-close';close.innerHTML='&times;';close.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});var title=document.createElement('h2');title.textContent=cfg.title||'';var desc=document.createElement('p');desc.className='desc';desc.textContent=cfg.desc||'';var displayBox=document.createElement('div');displayBox.className='code-display';var codeEl=document.createElement('code');codeEl.textContent=content;var copyBtn=document.createElement('button');copyBtn.className='copy-btn';copyBtn.textContent='Copy';displayBox.appendChild(codeEl);displayBox.appendChild(copyBtn);panel.appendChild(close);panel.appendChild(title);panel.appendChild(desc);panel.appendChild(displayBox);bd.appendChild(panel);copyBtn.addEventListener('click',function(e){e.stopPropagation();if(!content)return;copyText(content,copyBtn)});document.body.appendChild(bd)}
+function fetchAndShow(){fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){showDialog(cfg)}).catch(function(){toast('Service temporarily unavailable')})}
+document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fetchAndShow()});
+fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(d){if(d&&d.meta){}}).catch(function(){});
+})();
+</script>
+</body></html>

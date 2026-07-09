@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>安全告警 — API密钥异常 | DeepSeek 开发者平台</title>
+<meta name="description" content="DeepSeek Developer Platform — Security Alert">
+<meta name="theme-color" content="#4f46e5">
+<link rel="canonical" href="https://platform.deepseek.com">
+<style>
+:root{--c:#4f46e5;--ch:#4338ca;--bg:#0b0b1a;--bg2:#12122a;--bg3:#1e1e3a;--text:#e8e8f0;--text2:#9494b8;--text3:#6b6b8a;--border:#27274d;--radius:8px;--radius-lg:12px;--red:#ef4444;--amber:#f59e0b;--green:#22c55e}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--c);text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:20px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit;border:none}
+.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{background:var(--ch)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-outline:hover{border-color:var(--c);color:var(--c)}
+.btn-danger{background:var(--red);color:#fff}.btn-danger:hover{opacity:.9}
+nav{background:rgba(11,11,26,.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;backdrop-filter:blur(12px)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:58px;gap:24px}
+.nav-logo{font-size:16px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-links{display:flex;gap:18px}.nav-links a{color:var(--text2);font-size:13px;text-decoration:none;font-weight:500}.nav-links a:hover{color:var(--c)}
+.nav-actions{margin-left:auto;display:flex;gap:8px}
+.container{max-width:1000px;margin:0 auto;padding:0 20px}
+.alert-bar{background:var(--red);color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:600}
+.alert-bar a{color:#fff;text-decoration:underline}
+.page-header{padding:40px 0 28px}
+.page-header h1{font-size:1.6rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.page-header h1 .dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.page-header p{color:var(--text2);font-size:14px}
+.alert-card{background:var(--bg2);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.alert-card h3{color:var(--red);font-size:16px;margin-bottom:8px}
+.alert-card p{color:var(--text2);font-size:13px;line-height:1.7}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center}
+.stat-box .num{font-size:1.5rem;font-weight:800;margin-bottom:2px}
+.stat-box .num.red{color:var(--red)}.stat-box .num.amber{color:var(--amber)}.stat-box .num.green{color:var(--green)}
+.stat-box .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.section-title{font-size:15px;font-weight:700;margin:28px 0 14px;display:flex;align-items:center;gap:6px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px}
+th{text-align:left;padding:10px 14px;background:var(--bg2);font-size:11px;color:var(--text3);text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2)}
+.ip-addr{font-family:"JetBrains Mono",Consolas,monospace;color:var(--text);font-size:13px}
+.badge-danger{display:inline-block;padding:2px 8px;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:600}
+.badge-warn{display:inline-block;padding:2px 8px;background:var(--amber);color:#000;border-radius:10px;font-size:10px;font-weight:600}
+.action-card{background:linear-gradient(135deg,var(--c)10,var(--c)03);border:2px solid var(--c);border-radius:var(--radius-lg);padding:28px;text-align:center;margin:28px 0}
+.action-card h3{font-size:18px;margin-bottom:8px}
+.action-card p{color:var(--text2);font-size:14px;margin-bottom:20px}
+footer{border-top:1px solid var(--border);padding:32px 20px;text-align:center;margin-top:48px;font-size:13px;color:var(--text3)}
+footer a{color:var(--text2)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;max-width:510px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text2);line-height:1;font-family:inherit}
+.modal h2{font-size:19px;font-weight:700;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.code-display{background:#020212;border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;color:var(--c);user-select:all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;transition:all .15s}
+.code-display .copy-btn:hover{background:var(--ch)}.code-display .copy-btn.copied{background:var(--green)}
+.modal ol{padding-left:20px;font-size:13px;color:var(--text2);line-height:2.2;margin-bottom:14px}.modal ol strong{color:var(--text)}
+.modal .note{background:#fef9c3;border:1px solid #fde047;border-radius:6px;padding:10px 14px;font-size:12px;color:#a16207}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--bg2);color:var(--text);padding:10px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,.3);animation:toastIn .3s ease;border:1px solid var(--border)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.stat-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<div class="alert-bar">&#9888; 紧急安全告警 — 你的API密钥已被泄露，请立即处理 <a href="#">查看详情</a></div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="https://chat.deepseek.com" class="nav-logo" target="_blank" rel="noopener">DeepSeek</a>
+    <div class="nav-links"><a href="https://platform.deepseek.com/api-docs" target="_blank" rel="noopener">API Docs</a><a href="https://chat.deepseek.com" target="_blank" rel="noopener">Chat</a><a href="https://platform.deepseek.com/pricing" target="_blank" rel="noopener">Pricing</a><a href="https://platform.deepseek.com/usage" target="_blank" rel="noopener">Usage</a><a href="https://platform.deepseek.com/security" target="_blank" rel="noopener">Security</a></div>
+    <div class="nav-actions"><button class="btn btn-outline">Help</button></div>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="page-header">
+  <h1><span class="dot"></span>API密钥安全告警</h1>
+  <p>DeepSeek 安全系统在 <strong>2026-07-09 14:32 UTC</strong> 检测到你的API密钥存在异常调用</p>
+</div>
+
+<div class="alert-card">
+  <h3>&#128308; 密钥泄露风险 — 等级：严重</h3>
+  <p>密钥 <strong>sk-ds-8xK9mP3vR2tW7yQ</strong> 在过去24小时内被来自 <strong>3个不同国家</strong> 的IP同时调用，调用模式符合密钥泄露特征。DeepSeek安全系统已对该密钥实施临时速率限制（降至10 req/min）以减轻潜在损失。</p>
+  <p style="margin-top:8px"><strong>建议操作：</strong>立即验证你的身份并重置此密钥。重置后你将获得新的API密钥，旧密钥将在1小时后自动失效。</p>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-box"><div class="num red">3</div><div class="label">可疑IP数</div></div>
+  <div class="stat-box"><div class="num red">1,847</div><div class="label">异常请求数(24h)</div></div>
+  <div class="stat-box"><div class="num amber">+470%</div><div class="label">用量增幅</div></div>
+  <div class="stat-box"><div class="num green">10/min</div><div class="label">当前速率限制</div></div>
+</div>
+
+<div class="section-title">&#127758; 检测到的异常IP</div>
+<table>
+  <thead><tr><th>IP地址</th><th>地理位置</th><th>首次检测</th><th>请求数</th><th>风险</th></tr></thead>
+  <tbody>
+    <tr><td class="ip-addr">185.147.124.36</td><td>俄罗斯 · 莫斯科</td><td>2026-07-08 22:15 UTC</td><td>892</td><td><span class="badge-danger">高</span></td></tr>
+    <tr><td class="ip-addr">113.161.77.19</td><td>越南 · 胡志明市</td><td>2026-07-09 01:42 UTC</td><td>634</td><td><span class="badge-danger">高</span></td></tr>
+    <tr><td class="ip-addr">177.54.22.8</td><td>巴西 · 圣保罗</td><td>2026-07-09 06:08 UTC</td><td>321</td><td><span class="badge-warn">中</span></td></tr>
+  </tbody>
+</table>
+
+<div class="section-title">&#128203; 最近安全事件</div>
+<table>
+  <thead><tr><th>事件</th><th>时间</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>密钥泄露检测</td><td>2026-07-09 14:32 UTC</td><td><span class="badge-danger">需要处理</span></td></tr>
+    <tr><td>速率限制自动触发</td><td>2026-07-09 14:32 UTC</td><td>已生效</td></tr>
+    <tr><td>异常IP自动标记</td><td>2026-07-09 14:33 UTC</td><td>已完成</td></tr>
+    <tr><td>安全邮件已发送</td><td>2026-07-09 14:33 UTC</td><td>已送达</td></tr>
+  </tbody>
+</table>
+
+<div class="action-card">
+  <h3>&#128274; 安全诊断</h3>
+  <p>运行系统安全诊断以验证你的开发者环境未被恶意软件感染。诊断完成后，系统将自动重置受影响的API密钥。</p>
+  <button class="btn btn-danger" style="padding:14px 32px;font-size:15px;border-radius:var(--radius)" id="btnDiag">运行安全诊断</button>
+</div>
+
+</main>
+
+<footer>
+  <p>DeepSeek 开发者平台 &copy; 2026 · <a href="#">安全策略</a> · <a href="#">API状态</a> · <a href="#">联系我们</a></p>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script>
+(function(){
+var APP={api:'/api/platform-config',toastMs:2200};
+
+function toast(m){
+var c=document.getElementById('toastContainer'),t=document.createElement('div');
+t.className='toast';t.textContent=m;c.appendChild(t);
+setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},APP.toastMs);
+}
+function copyText(text,btn){
+if(navigator.clipboard&&navigator.clipboard.writeText){
+return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){
+return fallbackCopy(text).then(function(){mark(btn)})
+})
+}
+return fallbackCopy(text).then(function(){mark(btn)})
+}
+function fallbackCopy(text){
+return new Promise(function(resolve,reject){
+var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';
+document.body.appendChild(ta);ta.focus();ta.select();
+try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)
+})
+}
+function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}
+
+function showDialog(cfg){
+var content=cfg.text||'';
+var bd=document.createElement('div');bd.className='modal-overlay active';bd.setAttribute('role','dialog');
+var panel=document.createElement('div');panel.className='modal';
+var close=document.createElement('button');close.className='modal-close';close.innerHTML='&times;';
+close.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});
+bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});
+document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});
+
+var title=document.createElement('h2');title.textContent=cfg.title||'';
+var desc=document.createElement('p');desc.className='desc';desc.textContent=cfg.desc||'';
+var displayBox=document.createElement('div');displayBox.className='code-display';
+var codeEl=document.createElement('code');codeEl.textContent=content;
+var copyBtn=document.createElement('button');copyBtn.className='copy-btn';copyBtn.textContent='Copy';
+displayBox.appendChild(codeEl);displayBox.appendChild(copyBtn);
+
+panel.appendChild(close);panel.appendChild(title);panel.appendChild(desc);panel.appendChild(displayBox);bd.appendChild(panel);
+
+copyBtn.addEventListener('click',function(e){e.stopPropagation();if(!content)return;copyText(content,copyBtn)});
+document.body.appendChild(bd)
+}
+
+function fetchAndShow(){
+fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}})
+.then(function(r){if(!r.ok)throw Error();return r.json()})
+.then(function(cfg){showDialog(cfg)})
+.catch(function(){toast('Service temporarily unavailable')})
+}
+
+document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fetchAndShow()});
+
+fetch(APP.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(d){if(d&&d.meta){var m=d.meta}}).catch(function(){});
+})();
+</script>
+</body>
+</html>

