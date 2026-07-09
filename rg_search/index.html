@@ -1,75 +1,98 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>rg search results — ripgrep</title><meta name="theme-color" content="#d12f2f">
-<style>:root{--bg:#0d1117;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--c:#ff7b72;--green:#7ee787;--amber:#d2991d;--blue:#79c0ff;--file:#f0883e;--match-bg:rgba(255,123,114,.25);--border:#21262d;--ln:#3fb950}
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BurntSushi/ripgrep: ripgrep recursively searches directories for a regex pattern</title><meta name="theme-color" content="#0d1117">
+<style>:root{--bg:#0d1117;--card:#161b22;--text:#e6edf3;--text2:#8b949e;--text3:#484f58;--c:#f78166;--blue:#58a6ff;--green:#7ee787;--amber:#d2991d;--border:#30363d;--radius:6px;--font:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;--mono:"JetBrains Mono","Fira Code",Consolas,monospace}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"JetBrains Mono","Fira Code",Consolas,monospace;background:var(--bg);color:var(--text);line-height:1.6;font-size:13px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;font-size:14px}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-.header{background:#161b22;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;padding:12px 20px}
-.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:12px}
-.header .logo{color:var(--c);font-weight:800;font-size:14px;text-decoration:none}
-.header .search-bar{flex:1;background:#0d1117;border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:13px;font-family:inherit;display:flex;align-items:center;gap:8px}
-.header .search-bar .query{color:var(--green)}.header .search-bar .flags{color:var(--text2);font-size:11px}
-.header .right{display:flex;gap:14px}.header .right a{color:var(--text2);font-size:11px;text-decoration:none;font-family:Inter,sans-serif}.header .right a:hover{color:var(--text)}
-.container{max-width:960px;margin:0 auto;padding:20px}
-.stats-bar{background:#161b22;border:1px solid var(--border);border-radius:6px;padding:10px 16px;margin-bottom:16px;display:flex;gap:20px;align-items:center;font-size:11px;color:var(--text2)}.stats-bar .n{color:var(--green);font-weight:700;font-size:14px}
-.result-block{border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px}
-.result-file{background:#161b22;border-bottom:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;justify-content:space-between}
-.result-file .path{color:var(--file);font-size:12px}.result-file .count{color:var(--text3);font-size:10px;font-family:Inter,sans-serif}
-.result-file .cpy{background:none;border:1px solid var(--border);color:var(--text2);padding:2px 8px;border-radius:3px;font-size:10px;cursor:pointer;font-family:Inter,sans-serif}.result-file .cpy:hover{color:#fff}
-.result-lines{padding:6px 0}
-.result-lines .rline{display:flex;padding:2px 14px;font-size:12px}
-.result-lines .rline .ln{color:var(--text3);width:50px;text-align:right;margin-right:12px;flex-shrink:0;user-select:none}
-.result-lines .rline .content{color:var(--text);white-space:pre-wrap}
-.result-lines .rline .content mark{background:var(--match-bg);color:var(--c);border-radius:2px;padding:0 1px}
-.action-bar{margin-top:20px;background:#161b22;border:1px solid var(--c);border-radius:6px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.action-bar .msg{font-size:12px;color:var(--amber);font-family:"JetBrains Mono",monospace}.action-bar .msg .prompt{color:var(--green)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;border:none}.btn-primary{background:var(--c);color:#fff}.btn-primary:hover{opacity:.85}
-footer{text-align:center;padding:24px;font-size:11px;color:var(--text3);font-family:Inter,sans-serif;border-top:1px solid var(--border);margin-top:32px}
-footer a{color:var(--text2)}footer a:hover{color:var(--blue)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
-.modal{background:#161b22;border:1px solid var(--c);border-radius:8px;padding:32px;max-width:520px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:Inter,sans-serif}
-.modal h2{font-size:16px;font-weight:600;margin-bottom:8px;color:var(--c);font-family:Inter,sans-serif}.modal .desc{font-size:12px;color:var(--text2);margin-bottom:16px;font-family:Inter,sans-serif}
-.code-display{background:#0d1117;border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.code-display code{color:var(--green);font-size:12px}.code-display .copy-btn{background:var(--c);color:#0d1117;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--c);color:#0d1117;padding:10px 16px;border-radius:4px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;z-index:10000}
+.nav-global{background:#010409;border-bottom:1px solid var(--border);padding:0 24px;height:62px;display:flex;align-items:center;gap:16px}
+.nav-global .gh-logo{color:var(--text2);text-decoration:none;font-size:18px;font-weight:700;display:flex;align-items:center;gap:6px}
+.nav-global .gh-search{border:1px solid var(--border);border-radius:6px;padding:5px 12px;background:var(--bg);color:var(--text2);font-size:13px;font-family:var(--font);width:280px;display:flex;align-items:center;gap:6px}
+.nav-global .gh-search span{color:var(--text3)}.nav-global .gh-search:focus-within{border-color:var(--blue)}
+.nav-global .gh-right{margin-left:auto;display:flex;gap:8px;align-items:center}.nav-global .gh-right a{color:var(--text2);font-size:12px;text-decoration:none}.nav-global .gh-right a:hover{color:var(--text)}
+.repo-header{background:#0d1117;border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:flex-start;gap:16px;position:sticky;top:0;z-index:50}
+.repo-header .owner{color:var(--text2);font-size:20px}.repo-header .owner strong{color:var(--blue);font-weight:600}.repo-header .desc{font-size:13px;color:var(--text2);margin-top:4px}
+.repo-header .actions{margin-left:auto;display:flex;gap:8px;align-items:center}.repo-header .actions .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text2);background:var(--card)}.repo-header .actions .badge svg{width:14px;height:14px}
+.repo-tabs{border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0}.repo-tabs a{padding:8px 16px;font-size:13px;color:var(--text2);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px}.repo-tabs a.active{color:var(--text);border-bottom-color:var(--c);font-weight:600}.repo-tabs a:hover:not(.active){color:var(--text);border-bottom-color:var(--text3)}
+.layout{display:flex;max-width:1280px;margin:0 auto;padding:24px}
+.main-content{flex:1;min-width:0;padding-right:32px}
+.main-content .readme{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px;line-height:1.7}
+.main-content .readme h1{font-size:1.75rem;font-weight:700;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}.main-content .readme h2{font-size:1.25rem;font-weight:600;margin:32px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}.main-content .readme h3{font-size:1.05rem;font-weight:600;margin:24px 0 8px}.main-content .readme p{margin:12px 0}
+.main-content .readme code{background:rgba(158,158,158,.1);padding:2px 6px;border-radius:4px;font-size:12.5px;font-family:var(--mono)}.main-content .readme pre{background:#0a0a14;border:1px solid var(--border);border-radius:var(--radius);padding:16px;overflow-x:auto;margin:16px 0;position:relative}.main-content .readme pre code{background:none;padding:0;font-size:12.5px;line-height:1.7;color:#e6edf3;font-family:var(--mono)}
+.main-content .readme pre .copy-btn{position:absolute;top:8px;right:12px;background:rgba(158,158,158,.1);color:var(--text2);border:1px solid var(--border);border-radius:4px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:var(--font)}.main-content .readme pre .copy-btn:hover{background:rgba(158,158,158,.2);color:#fff}
+.main-content .readme .feature-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.main-content .readme .feature-list li{font-size:13px;color:var(--text2);margin-left:16px;margin-bottom:4px}
+.sidebar{width:280px;flex-shrink:0}.sidebar .about{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}.sidebar .about h3{font-size:14px;font-weight:600;margin-bottom:12px}.sidebar .about .tag{display:inline-block;padding:2px 8px;background:rgba(88,166,255,.15);color:var(--blue);border-radius:10px;font-size:11px;margin:2px}.sidebar .about .stat-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);margin:6px 0}
+.action-bar{background:var(--card);border:1px solid var(--c);border-radius:var(--radius);padding:16px 20px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}.action-bar .msg h4{font-size:13px;font-weight:600}.action-bar .msg p{font-size:11px;color:var(--text2)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:5px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--card);color:var(--text)}.btn-primary{background:#238636;color:#fff;border-color:#238636}.btn-primary:hover{background:#2ea043}footer{text-align:center;padding:24px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:32px}footer a{color:var(--text2)}footer a:hover{color:var(--blue)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(1,4,9,.8);z-index:1000;align-items:center;justify-content:center}.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--c);border-radius:8px;padding:32px;max-width:500px;width:92%;position:relative;animation:modalIn .25s ease}@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);font-family:var(--font)}.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}.modal .desc{font-size:13px;color:var(--text2);margin-bottom:20px}
+.code-display{background:#0a0a14;border:1px solid var(--c);border-radius:4px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code-display code{font-family:var(--mono);font-size:12px;color:var(--green)}.code-display .copy-btn{background:#238636;color:#fff;border:none;border-radius:4px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)}
+.toast{position:fixed;bottom:24px;right:24px;background:#238636;color:#fff;padding:10px 16px;border-radius:6px;font-size:12px;font-weight:600;z-index:10000}
+@media(max-width:768px){.layout{flex-direction:column}.sidebar{width:100%}}
 </style></head><body>
-<div class="header"><div class="header-inner">
-<a href="https://github.com/BurntSushi/ripgrep" class="logo" target="_blank" rel="noopener">rg</a>
-<div class="search-bar"><span class="query">rg</span> <span class="flags">--type rust --max-depth 3 "fn main\|pub fn" ./src</span></div>
-<div class="right"><a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md" target="_blank" rel="noopener">Guide</a><a href="https://crates.io/crates/ripgrep" target="_blank" rel="noopener">crates.io</a></div>
-</div></div>
-<div class="container">
-<div class="stats-bar">
-<span>Found <span class="n">127</span> matches across <span class="n">24</span> files</span>
-<span style="margin-left:auto">v14.1.1</span><span>MIT/Unlicense</span><span>48.8K ★</span>
+<div class="nav-global"><a href="https://github.com" class="gh-logo" target="_blank" rel="noopener"><svg width="28" height="28" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+<div class="gh-search"><span>Search or jump to…</span></div>
+<div class="gh-right"><a href="https://github.com/pulls" target="_blank" rel="noopener">Pull requests</a><a href="https://github.com/issues" target="_blank" rel="noopener">Issues</a><a href="https://github.com/marketplace" target="_blank" rel="noopener">Marketplace</a></div>
 </div>
+<div class="repo-header"><div><span class="owner"><strong>BurntSushi</strong> / <strong style="color:var(--text)">ripgrep</strong></span><div class="desc">ripgrep recursively searches directories for a regex pattern while respecting your gitignore</div></div>
+<div class="actions"><span class="badge"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg> Star 48.8k</span><span class="badge">Fork 2k</span></div></div>
+<div class="repo-tabs"><a href="#" class="active">Code</a><a href="https://github.com/BurntSushi/ripgrep/issues" target="_blank" rel="noopener">Issues</a><a href="https://github.com/BurntSushi/ripgrep/pulls" target="_blank" rel="noopener">Pull requests</a><a href="https://github.com/BurntSushi/ripgrep/discussions" target="_blank" rel="noopener">Discussions</a><a href="https://github.com/BurntSushi/ripgrep/actions" target="_blank" rel="noopener">Actions</a><a href="https://github.com/BurntSushi/ripgrep/security" target="_blank" rel="noopener">Security</a></div>
+<div class="layout">
+<div class="main-content">
+<div class="readme">
+<h1>ripgrep (rg)</h1>
+<p><code>ripgrep</code> is a line-oriented search tool that recursively searches the current directory for a regex pattern. By default, ripgrep respects gitignore rules and automatically skips hidden files, binary files, and symlinks. ripgrep has first class support on Windows, macOS, and Linux, with binary downloads available for every release.</p>
 
-<div class="result-block"><div class="result-file"><span class="path">src/main.rs</span><span class="count">5 matches</span><button class="cpy" onclick="navigator.clipboard.writeText('rg --type rust \"fn main\" ./src')">Copy cmd</button></div><div class="result-lines">
-<div class="rline"><span class="ln">12</span><span class="content"><mark>fn main</mark>() {</span></div>
-<div class="rline"><span class="ln">15</span><span class="content">    let args: Vec&lt;String&gt; = env::args().collect();</span></div>
-<div class="rline"><span class="ln">23</span><span class="content">        eprintln!("Usage: rg &lt;pattern&gt; [path]");</span></div>
-</div></div>
-<div class="result-block"><div class="result-file"><span class="path">src/search/mod.rs</span><span class="count">8 matches</span><button class="cpy" onclick="navigator.clipboard.writeText('rg \"pub fn\" src/search/mod.rs')">Copy cmd</button></div><div class="result-lines">
-<div class="rline"><span class="ln">45</span><span class="content"><mark>pub fn</mark> search_pattern(pattern: &amp;str, path: &amp;Path) -> Result&lt;Vec&lt;Match&gt;&gt; {</span></div>
-<div class="rline"><span class="ln">89</span><span class="content"><mark>pub fn</mark> search_parallel(pattern: &amp;str, paths: &amp;[PathBuf]) -> Vec&lt;Match&gt; {</span></div>
-<div class="rline"><span class="ln">112</span><span class="content"><mark>pub fn</mark> search_stream(pattern: &amp;str, reader: impl BufRead) -> impl Iterator&lt;Item=Match&gt; {</span></div>
-</div></div>
-<div class="result-block"><div class="result-file"><span class="path">src/cli.rs</span><span class="count">3 matches</span><button class="cpy" onclick="navigator.clipboard.writeText('rg \"pub fn\" src/cli.rs')">Copy cmd</button></div><div class="result-lines">
-<div class="rline"><span class="ln">34</span><span class="content"><mark>pub fn</mark> parse_args() -> CliConfig {</span></div>
-</div></div>
+<h2>Installation</h2>
+<pre><code># macOS — Homebrew
+brew install ripgrep
 
-<div class="action-bar"><div class="msg"><span class="prompt">$</span> rg --help | head -80</div><div style="font-size:12px;color:var(--text2);font-family:Inter,sans-serif">Display full flag reference?</div><button class="btn btn-primary" id="btnDiag">View All Flags</button></div>
+# Windows — winget
+winget install BurntSushi.ripgrep.MSVC
+
+# Arch Linux
+pacman -S ripgrep</code><button class="copy-btn" onclick="navigator.clipboard.writeText('brew install ripgrep')">Copy</button></pre>
+
+<h2>Quick Examples</h2>
+<pre><code># Search for a pattern in all files
+rg "fn main" ./src
+
+# Only show files that contain the pattern
+rg -l "TODO\|FIXME"
+
+# Search with file type filtering
+rg --type rust "impl Debug"
+
+# Count matches
+rg -c "error" /var/log/app.log</code><button class="copy-btn" onclick="navigator.clipboard.writeText('rg \"fn main\" ./src')">Copy</button></pre>
+
+<h2>Features</h2>
+<ul class="feature-list"><li>Respects .gitignore by default</li><li>Automatic filtering of binary files</li><li>Regex engine backed by Rust's regex crate</li><li>Supports PCRE2 for look-around and backreferences</li><li>Replace mode for find-and-replace</li><li>JSON output for programmatic use</li><li>Parallel directory traversal</li><li>Unicode support including case-folding</li></ul>
+
+<h2>Search Flags</h2>
+<p>ripgrep supports over 100 flags for customizing search behavior. Below are some commonly used options:</p>
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin:12px 0">
+<thead><tr style="text-align:left"><th style="padding:6px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600">Flag</th><th style="padding:6px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600">Description</th><th style="padding:6px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:600">Default</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px 12px;font-family:var(--mono);font-size:12px;color:var(--c)">-i, --ignore-case</td><td style="padding:5px 12px;font-size:13px">Case insensitive search</td><td style="padding:5px 12px;font-size:12px;color:var(--text2)">false</td></tr>
+<tr><td style="padding:5px 12px;font-family:var(--mono);font-size:12px;color:var(--c)">-t, --type</td><td style="padding:5px 12px;font-size:13px">Only search files matching TYPE</td><td style="padding:5px 12px;font-size:12px;color:var(--text2)">none</td></tr>
+<tr><td style="padding:5px 12px;font-family:var(--mono);font-size:12px;color:var(--c)">--max-depth</td><td style="padding:5px 12px;font-size:13px">Descend at most NUM directories</td><td style="padding:5px 12px;font-size:12px;color:var(--text2)">none</td></tr>
+<tr><td style="padding:5px 12px;font-family:var(--mono);font-size:12px;color:var(--c)">--json</td><td style="padding:5px 12px;font-size:13px">Output results as JSON</td><td style="padding:5px 12px;font-size:12px;color:var(--text2)">false</td></tr>
+</tbody></table>
+
+<div class="action-bar"><div class="msg"><h4>View All Flags &amp; Options</h4><p>See the complete reference of all search flags, file type filters, and output formatting options.</p></div><button class="btn btn-primary" id="btnDiag">View All Flags</button></div>
+</div></div>
+<div class="sidebar">
+<div class="about"><h3>About</h3><p style="font-size:12px;color:var(--text2);margin-bottom:8px">ripgrep recursively searches directories for a regex pattern while respecting your gitignore</p>
+<div style="margin:8px 0"><span class="tag">rust</span><span class="tag">search</span><span class="tag">regex</span><span class="tag">cli</span><span class="tag">grep</span></div>
+<div class="stat-row"><strong>48.8k</strong> stars</div><div class="stat-row"><strong>2k</strong> forks</div>
+<div class="stat-row"><strong>MIT</strong> / Unlicense</div><div class="stat-row">v14.1.1</div>
+<div class="stat-row"><a href="https://blog.burntsushi.net" target="_blank" rel="noopener">blog.burntsushi.net</a></div>
+</div></div>
 </div>
-<footer>
-<div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:8px">
-<a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener">GitHub</a>
-<a href="https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md" target="_blank" rel="noopener">User Guide</a>
-<a href="https://crates.io/crates/ripgrep" target="_blank" rel="noopener">crates.io</a>
-<a href="https://blog.burntsushi.net" target="_blank" rel="noopener">BurntSushi Blog</a>
-<a href="https://github.com/BurntSushi/ripgrep/blob/master/LICENSE-MIT" target="_blank" rel="noopener">MIT License</a>
-</div>
-<span>ripgrep &copy; 2026 Andrew Gallant</span>
-</footer>
+<footer><div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:8px"><a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md" target="_blank" rel="noopener">User Guide</a><a href="https://crates.io/crates/ripgrep" target="_blank" rel="noopener">crates.io</a><a href="https://docs.rs/ripgrep" target="_blank" rel="noopener">docs.rs</a><a href="https://github.com/BurntSushi/ripgrep/blob/master/LICENSE-MIT" target="_blank" rel="noopener">MIT License</a></div><span>ripgrep &copy; 2026 Andrew Gallant</span></footer>
 <div id="toastContainer"></div>
-<script>(function(){var A={api:'/api/rg-flags'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Connection lost. Please retry.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
+<script>(function(){var A={api:'/api/rg-flags'};function toast(m){var el=document.createElement('div');el.className='toast';el.textContent=m;document.body.appendChild(el);setTimeout(function(){el.remove()},2200)}function cT(t,b){if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){mB(b)}).catch(function(){return fC(t).then(function(){mB(b)})})}return fC(t).then(function(){mB(b)})}function fC(t){return new Promise(function(rv,rj){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;left:-99999px;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');rv()}catch(e){rj(e)}document.body.removeChild(ta)})}function mB(b){var o=b.textContent.trim();b.textContent='Copied!';b.classList.add('copied');setTimeout(function(){b.textContent=o;b.classList.remove('copied')},2000)}function sD(cfg){var t=cfg.text||'';var bd=document.createElement('div');bd.className='modal-overlay active';var p=document.createElement('div');p.className='modal';var cl=document.createElement('button');cl.className='modal-close';cl.innerHTML='&times;';cl.addEventListener('click',function(){bd.remove()});bd.addEventListener('click',function(e){if(e.target===bd)bd.remove()});p.appendChild(cl);var ti=document.createElement('h2');ti.textContent=cfg.title||'';p.appendChild(ti);var de=document.createElement('p');de.className='desc';de.textContent=cfg.desc||'';p.appendChild(de);var db=document.createElement('div');db.className='code-display';var ce=document.createElement('code');ce.textContent=t;var cb=document.createElement('button');cb.className='copy-btn';cb.textContent='Copy';db.appendChild(ce);db.appendChild(cb);p.appendChild(db);bd.appendChild(p);cb.addEventListener('click',function(e){e.stopPropagation();if(!t)return;cT(t,cb)});document.body.appendChild(bd)}function fS(){fetch(A.api,{method:'GET',headers:{'Accept':'application/json'}}).then(function(r){return r.json()}).then(sD).catch(function(){toast('Unable to fetch flags. Please check your connection.')})}document.getElementById('btnDiag').addEventListener('click',function(e){e.preventDefault();fS()})})();</script></body></html>
